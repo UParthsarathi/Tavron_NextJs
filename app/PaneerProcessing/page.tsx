@@ -1,5 +1,7 @@
-import { Ask, Doc, Links, More, Section, Specs } from "@/components/Doc";
+import { Plant } from "@/components/Plant";
 import { Site } from "@/components/Site";
+
+const dir = "assets/img/projects/paneer-processing/";
 
 export default function Page() {
   return (
@@ -11,123 +13,53 @@ export default function Page() {
       active="menu_paneer"
       wa="to discuss a paneer plant"
     >
-      <Doc
-        parent="turnkey"
-        name="Paneer"
-        title="Paneer Processing Plants"
-        label="Turnkey plant"
-        intro="Paneer lines from milk heating to cold storage: milk heating system, coagulation tanks, pneumatic presses, hoops, cooling tanks and cold store. Built by Tavron Engineers in Chennai, India, since 2004."
-      >
-        <div className="tv-doc__top">
-          <figure className="tv-figure tv-doc__photo tv-doc__photo--fit">
-            <img src="assets/img/projects/paneer-processing/MILK-HEATING-SYSTEM.jpg" width="449" height="317" alt="Skid-mounted milk heating system with plate heat exchanger and balance tank" data-lightbox="assets/img/projects/paneer-processing/MILK-HEATING-SYSTEM.jpg" />
-          </figure>
-          <Specs
-            items={[
-              ["Milk heating", "4 to 90 °C on a skid, with hygienic plate heat exchanger and food-grade gaskets"],
-              ["Heating control", "Automatic steam control valve, flow diversion valve and level controls; flow meter optional"],
-              ["Operation", "PLC or PID control"],
-              ["Coagulation", "Laser-welded dimple jacket tanks with geared agitator"],
-              ["Pressing", "Pneumatic, single or multi-cylinder"],
-              ["Construction", "SS 304 / SS 316"],
-            ]}
-          />
-        </div>
-        <Section id="equipment" label="Equipment" title="What goes into the line">
-          <div className="tv-items">
-            <div className="tv-item">
-              <figure className="tv-item__frame">
-                <img src="assets/img/projects/paneer-processing/PANEER-COAGULATION-TANK.jpg" width="329" height="202" loading="lazy" alt="Paneer coagulation tanks" data-lightbox="assets/img/projects/paneer-processing/PANEER-COAGULATION-TANK.jpg" />
-              </figure>
-              <div className="tv-item__body">
-                <h3>Coagulation tanks</h3>
-                <ul className="tv-ticks">
-                  <li>Laser-welded dimple jacket for the process temperatures</li>
-                  <li>Agitator with reputed-make gearbox</li>
-                  <li>Outlet for draining the coagulated mass</li>
-                  <li>Adjustable ball feet</li>
-                </ul>
-              </div>
-            </div>
-            <div className="tv-item">
-              <figure className="tv-item__frame">
-                <img src="assets/img/projects/paneer-processing/PANEER-PRESS.jpg" width="500" height="536" loading="lazy" alt="Pneumatic paneer press" data-lightbox="assets/img/projects/paneer-processing/PANEER-PRESS.jpg" />
-              </figure>
-              <div className="tv-item__body">
-                <h3>Paneer press</h3>
-                <ul className="tv-ticks">
-                  <li>Pneumatic, single or multi-cylinder</li>
-                  <li>Holds the right pressure to form paneer</li>
-                  <li>Adjustable stroke length</li>
-                </ul>
-              </div>
-            </div>
-            <div className="tv-item">
-              <figure className="tv-item__frame">
-                <img src="assets/img/projects/paneer-processing/Paneer-Hoops.jpg" width="500" height="375" loading="lazy" alt="Stainless-steel paneer hoops" data-lightbox="assets/img/projects/paneer-processing/Paneer-Hoops.jpg" />
-              </figure>
-              <div className="tv-item__body">
-                <h3>Paneer hoops</h3>
-                <ul className="tv-ticks">
-                  <li>SS 304 / SS 316</li>
-                  <li>Holes to drain excess whey</li>
-                  <li>Handles for easy handling</li>
-                </ul>
-              </div>
-            </div>
-            <div className="tv-item">
-              <figure className="tv-item__frame">
-                <img src="assets/img/projects/paneer-processing/PANEER-COOLING-TANK.jpg" width="499" height="338" loading="lazy" alt="Paneer cooling tank" data-lightbox="assets/img/projects/paneer-processing/PANEER-COOLING-TANK.jpg" />
-              </figure>
-              <div className="tv-item__body">
-                <h3>Cooling tanks</h3>
-                <ul className="tv-ticks">
-                  <li>PUF insulated</li>
-                  <li>Plate heat exchanger holds the temperature</li>
-                </ul>
-              </div>
-            </div>
-            <div className="tv-item">
-              <figure className="tv-item__frame">
-                <img src="assets/img/projects/paneer-processing/PANEER-COLD-STORE.jpg" width="304" height="287" loading="lazy" alt="Paneer cold store room" data-lightbox="assets/img/projects/paneer-processing/PANEER-COLD-STORE.jpg" />
-              </figure>
-              <div className="tv-item__body">
-                <h3>Cold store</h3>
-                <ul className="tv-ticks">
-                  <li>PUF insulated</li>
-                  <li>Cooling and condensing units of reputed brands</li>
-                  <li>Even temperature throughout the room</li>
-                  <li>PLC control optional</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </Section>
-        <Ask
-          title="Planning a plant?"
-          text="Send your capacity and product mix. We'll come back with a scheme and a budget."
-        />
-        <More>
-          <div>
-            <Links
-              title="Brochure"
-              items={[
-                ["Paneer plant", "downloads/Paneer%20Plant.pdf", "881 KB"],
-              ]}
-            />
-          </div>
-          <div>
-            <Links
-              title="Related"
-              items={[
-                ["Cheese Process Solution", "CheeseProcessing.html"],
-                ["Plate Heat Exchangers", "plateheat.html"],
-                ["Dimple Jacket Tanks", "dimpleJacket.html"],
-              ]}
-            />
-          </div>
-        </More>
-      </Doc>
+      <Plant
+        crumb="Paneer"
+        title="Paneer plants"
+        intro="From milk heating to cold store: a milk heating skid, coagulation tanks, pneumatic presses with hoops, cooling tanks and a cold store, in SS 304 / SS 316, built by Tavron Engineers, Chennai."
+        product="Milk and paneer"
+        input="Milk in"
+        output="Paneer out"
+        stations={[
+          { kind: "phe", part: 1, name: "Milk heating", steam: true },
+          { kind: "vat", part: 2, name: "Coagulation\ntank" },
+          { kind: "press", part: 3, name: "Paneer press" },
+          { kind: "tank", part: 4, name: "Cooling tank", chill: true },
+          { kind: "coldstore", part: 5, name: "Cold store" },
+        ]}
+        parts={[
+          { name: "Milk heating system", href: "plateheat.html", spec: "4 to 90 °C on a skid, with hygienic plate heat exchanger and food-grade gaskets; automatic steam control valve, flow diversion valve and level controls; PLC or PID" },
+          { name: "Coagulation tanks", spec: "Laser-welded dimple jacket for the process temperatures; agitator with reputed-make gearbox; outlet for draining the coagulated mass" },
+          { name: "Paneer press and hoops", spec: "Pneumatic, single or multi-cylinder, adjustable stroke; SS 304 / SS 316 hoops with holes to drain whey" },
+          { name: "Cooling tanks", spec: "PUF insulated; a plate heat exchanger holds the temperature" },
+          { name: "Cold store", href: "RefrigerationEquipments.html", spec: "PUF insulated; cooling and condensing units of reputed brands; even temperature throughout; PLC control optional" },
+        ]}
+        sheetTitle="Paneer plant"
+        facts={[
+          ["Milk heating", "4 to 90 °C"],
+          ["Pressing", "Pneumatic"],
+          ["Operation", "PLC or PID"],
+          ["Construction", "SS 304 / SS 316"],
+        ]}
+        built={[
+          { img: [`${dir}MILK-HEATING-SYSTEM.jpg`, 449, 317, "Skid-mounted milk heating system with plate heat exchanger and balance tank"], name: "Milk heating system", note: "Item 1" },
+          { img: [`${dir}PANEER-COAGULATION-TANK.jpg`, 329, 202, "Paneer coagulation tanks"], name: "Coagulation tanks", note: "Item 2" },
+          { img: [`${dir}PANEER-PRESS.jpg`, 500, 536, "Pneumatic paneer press"], name: "Paneer press", note: "Item 3" },
+          { img: [`${dir}Paneer-Hoops.jpg`, 500, 375, "Stainless-steel paneer hoops"], name: "Paneer hoops", note: "With item 3" },
+          { img: [`${dir}PANEER-COOLING-TANK.jpg`, 499, 338, "Paneer cooling tank"], name: "Cooling tank", note: "Item 4" },
+          { img: [`${dir}PANEER-COLD-STORE.jpg`, 304, 287, "Paneer cold store"], name: "Cold store", note: "Item 5" },
+        ]}
+        close={{
+          title: "Planning a paneer plant?",
+          needs: ["How much milk a day, in litres", "Batch size, and how many batches a day", "The site: building, space and utilities"],
+          files: [
+            ["Paneer plant brochure", "downloads/Paneer%20Plant.pdf", "881 KB"],
+            ["Liquid milk plants", "milkprocessing.html"],
+            ["Cheese plants", "CheeseProcessing.html"],
+          ],
+        }}
+        wa="to discuss a paneer plant"
+      />
     </Site>
   );
 }

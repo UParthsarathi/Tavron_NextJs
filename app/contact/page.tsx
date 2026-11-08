@@ -16,6 +16,7 @@ export default function Page() {
         label="Contact"
         intro="Tell us about your product, capacity and site, and we'll come back with a scheme and a budget. You can also call, email or message us on WhatsApp."
         quote={false}
+        className="tv-doc--contact"
       >
         <div className="tv-doc__top">
           <form role="form" className="php-email-form tv-form tv-doc__form">

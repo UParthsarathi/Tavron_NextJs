@@ -1,5 +1,7 @@
 import { entry, industries, products } from "@/components/catalog";
+import { NewsStrip } from "@/components/News";
 import { Site } from "@/components/Site";
+import { getNews } from "@/lib/news";
 
 // [logo file in assets/img/clients, client name] for the scrolling strip
 const clients = [
@@ -28,7 +30,8 @@ const stages = [
   ["Commissioning & launch", "Installed, handed over running, then supported.", "ri-rocket-2-line"],
 ];
 
-export default function Page() {
+export default async function Page() {
+  const latest = (await getNews()).slice(0, 3);
   return (
     <Site
       title={"Tavron Engineers — Process Equipment & Turnkey Plants for Dairy, Food & Beverage"}
@@ -91,6 +94,7 @@ export default function Page() {
             {clients.map(([file, name]) => <img key={file} src={`assets/img/clients/${file}`} alt={name} loading="lazy" />)}
           </div>
         </section>
+        <NewsStrip items={latest} />
         <section className="tv-section" id="industries">
           <div className="tv-wrap">
             <div className="tv-head tv-head--center tv-reveal">
@@ -99,11 +103,13 @@ export default function Page() {
               <p>Process equipment and complete plants for six industries.</p>
             </div>
             <div className="tv-grid tv-grid--3 tv-inds">
-              {industries.map((ind, i) => (
-                <figure key={ind.label} className="tv-ind tv-reveal" data-d={i % 3 || undefined}>
-                  <img src={ind.image} alt={ind.alt} loading="lazy" />
-                  <figcaption>{ind.label}</figcaption>
-                </figure>
+              {industries.map(({ label, slug, photo: [src, , , alt] }, i) => (
+                <a key={slug} href={`${slug}.html`}>
+                  <figure className="tv-ind tv-reveal" data-d={i % 3 || undefined}>
+                    <img src={src} alt={alt} loading="lazy" />
+                    <figcaption>{label}</figcaption>
+                  </figure>
+                </a>
               ))}
             </div>
           </div>

@@ -1,7 +1,7 @@
+import { SITE } from "@/lib/site";
 import { Footer } from "./Footer";
 import { Header, MobileNav, MobileNavToggle } from "./Header";
 
-const SITE = "https://tavron.net/";
 
 type Props = {
   title: string;

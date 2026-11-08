@@ -1,0 +1,103 @@
+[
+  {
+    "slug": "food-pro-2023",
+    "date": "2023",
+    "type": "Event",
+    "title": "Tavron at Food Pro 2023",
+    "summary": "Our team met visitors at the Tavron Engineers stand at Food Pro 2023.",
+    "image": {
+      "src": "assets/img/news/foodpro23-stand.jpg",
+      "width": 641,
+      "height": 477,
+      "alt": "The Tavron Engineers team at the Food Pro 2023 exhibition stand"
+    },
+    "body": [
+      "The Tavron Engineers team was at Food Pro 2023, meeting visitors at our stand and talking through process equipment and turnkey plants for dairy and food processing.",
+      "There are more photos from the stand in our LinkedIn post."
+    ],
+    "links": [
+      {
+        "label": "See the post on LinkedIn",
+        "href": "https://www.linkedin.com/feed/update/urn:li:activity:7120759094277275648/"
+      }
+    ]
+  },
+  {
+    "slug": "dispatches-march-2022",
+    "date": "2022-03",
+    "type": "Dispatch",
+    "title": "March 2022 dispatches: a 15 KL silo, storage tanks and a butter churn",
+    "summary": "Equipment that left our Chennai factory in March 2022, from a 500 L bulk milk cooler to a 15 KL vertical milk silo.",
+    "image": {
+      "src": "assets/img/news/dispatch-2022-03.jpg",
+      "width": 1277,
+      "height": 899,
+      "alt": "A 15 KL milk silo and a 3 KL jacketed tank strapped to a flatbed truck at night, ready to leave the Tavron factory"
+    },
+    "body": [
+      "Finished equipment leaves our factory at Manali New Town, Chennai, by road. In March 2022 that included milk storage, heat transfer, dairy and powder-handling equipment.",
+      "The dispatch sheet has a photo of each item."
+    ],
+    "list": {
+      "title": "What left the factory",
+      "items": [
+        "500 L bulk milk cooler",
+        "15 KL vertical milk silo and 3 KL jacketed tank",
+        "10 KL double-compartment milk storage tank",
+        "2 HP SS centrifugal pumps",
+        "Screw conveyors",
+        "Mini malt machines",
+        "2,000 L plate heat exchanger",
+        "600 L dump tank",
+        "Sliding gate valves",
+        "Butter churn"
+      ]
+    },
+    "links": [
+      {
+        "label": "Download the dispatch sheet",
+        "href": "news/2022MARCHdispatch.pdf",
+        "size": "1.4 MB"
+      }
+    ]
+  },
+  {
+    "slug": "dispatches-february-2022",
+    "date": "2022-02",
+    "type": "Dispatch",
+    "title": "February 2022 dispatches: a 20 KL silo, storage tanks and CIP tanks",
+    "summary": "Equipment that left our Chennai factory in February 2022, led by a 20 KL vertical milk silo lifted out by crane.",
+    "image": {
+      "src": "assets/img/news/dispatch-2022-02.jpg",
+      "width": 1276,
+      "height": 899,
+      "alt": "A crane lifting a 20 KL vertical milk silo outside the Tavron Engineers factory"
+    },
+    "body": [
+      "In February 2022 a 20 KL vertical milk silo was lifted out of our factory at Manali New Town, Chennai, by crane, along with milk storage tanks, CIP tanks and process equipment.",
+      "The dispatch sheet has a photo of each item."
+    ],
+    "list": {
+      "title": "What left the factory",
+      "items": [
+        "20 KL vertical milk silo",
+        "Plate heat exchanger",
+        "10 KL and 15 KL double-compartment horizontal milk storage tanks",
+        "Milk can trip saver, tubular heater and 1 HP pump",
+        "1,000 L dump tank, 600 L weigh bowl and 5 KL vertical milk storage tank",
+        "Roller conveyor",
+        "500 L overhead tank, 100 L dosing tank, flush tank and CIP tank",
+        "6 KL storage tank, hot water tank and caustic tank",
+        "Nutrient tanks",
+        "15 KL vertical milk storage tank"
+      ]
+    },
+    "links": [
+      {
+        "label": "Download the dispatch sheet",
+        "href": "news/2022februarydispatch.pdf",
+        "size": "1.5 MB"
+      }
+    ]
+  }
+]

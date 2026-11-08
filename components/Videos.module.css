@@ -1,0 +1,107 @@
+/* Videos: neutral and quiet. White page, near-black type, neutral greys; the videos are the only
+   colour. Thumbnails are shown about the size YouTube makes them (480px), so they stay sharp, and
+   a video plays in a player over the page.
+   Every rule starts with .page or .dialog: two classes outrank the global ".tv h2", ".tv p" and ".tv a". */
+
+.page {
+  --text: var(--ink);
+  --soft: #6E6E73;
+  --ground: #F5F5F7;
+  --hair: rgba(0, 0, 0, .08);
+  background: #fff;
+  color: var(--text);
+}
+/* the global "section { padding: 60px 0; overflow: hidden }" */
+.page section { padding-top: 0; padding-bottom: 0; overflow: visible; }
+.page .wrap { width: 100%; max-width: 1340px; margin-inline: auto; padding-inline: var(--gutter); }
+.page a:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; border-radius: 6px; }
+
+/* ---- head ---- */
+.page .hero { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 40px; padding-top: 140px; padding-bottom: 56px; }
+.page .crumb { list-style: none; display: flex; gap: 6px; margin: 0 0 32px; padding: 0; font-size: 14px; color: var(--soft); }
+.page .crumb li + li::before { content: "/"; margin-right: 6px; color: rgba(0, 0, 0, .2); }
+.page .crumb a { color: var(--soft); }
+.page .crumb a:hover { color: var(--text); }
+.page .title { font: 600 clamp(2.8rem, 1.5rem + 4vw, 5rem)/1 var(--f-display); letter-spacing: -.045em; color: var(--text); margin: 0 0 16px; }
+.page .lede { font-size: 1.25rem; line-height: 1.5; color: var(--soft); margin: 0; }
+.page .channel {
+  display: inline-flex; align-items: center; gap: 8px; padding-bottom: 3px;
+  font-size: 15px; font-weight: 600; color: var(--text);
+  border-bottom: 1px solid rgba(0, 0, 0, .25); transition: border-color .2s var(--ease);
+}
+.page .channel:hover { color: var(--text); border-color: var(--text); }
+.page .channel svg { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+
+/* ---- the gallery ---- */
+.page .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 52px 28px; }
+.page .card { display: block; color: var(--text); }
+.page .card:hover { color: var(--text); }
+.page .thumb { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; isolation: isolate; border-radius: 14px; background: var(--ground); }
+.page .media { position: absolute; inset: 0; display: block; transition: transform .6s var(--ease); }
+.page .card:hover .media { transform: scale(1.035); }
+/* hqdefault is 4:3 with the video letterboxed in it; cover crops the bars away */
+.page .shot { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; transform: scale(1.09); } /* the zoom trims thin side bars */
+/* upright clips sit as a 9:16 strip in the middle of the thumbnail: show that strip full-height,
+   over a blurred, enlarged copy of it that fills the frame */
+.page .fill { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; transform: scale(3.4); filter: blur(24px) saturate(1.05); }
+.page .strip { position: absolute; top: 0; bottom: 0; left: 50%; aspect-ratio: 9 / 16; overflow: hidden; transform: translateX(-50%); box-shadow: 0 0 40px rgba(0, 0, 0, .25); }
+.page .strip img { position: absolute; left: 50%; top: 50%; height: 133.4%; width: auto; max-width: none; transform: translate(-50%, -50%); }
+.page .badge {
+  position: absolute; right: 12px; bottom: 12px; display: inline-flex; /* right: the videos carry their maker's name bottom-left */ align-items: center; gap: 7px;
+  padding: 6px 11px 6px 10px; border-radius: 999px;
+  background: rgba(255, 255, 255, .86); -webkit-backdrop-filter: blur(12px) saturate(1.4); backdrop-filter: blur(12px) saturate(1.4);
+  font: 600 12.5px/1 var(--f-body); color: var(--text); font-variant-numeric: tabular-nums;
+}
+.page .badge svg { width: 8px; height: 10px; fill: currentColor; }
+.page .cardTitle { font: 600 1.15rem/1.3 var(--f-display); letter-spacing: -.015em; color: var(--text); margin: 18px 0 4px; }
+.page .cardMeta { display: block; font-size: 14px; color: var(--soft); }
+.page .empty { margin: 0; padding: 24px 0 48px; font-size: 1.1rem; color: var(--soft); }
+.page .empty a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- closing ---- */
+.page .end {
+  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 28px 56px; align-items: center;
+  margin: 120px 0 120px; padding: clamp(32px, 5vw, 64px); border-radius: 28px; background: var(--ground);
+}
+.page .endTitle { font: 600 clamp(1.6rem, 1.2rem + 1.1vw, 2.2rem)/1.15 var(--f-display); letter-spacing: -.03em; color: var(--text); margin: 0; }
+.page .endText { margin: 12px 0 0; font-size: 1.05rem; line-height: 1.6; color: var(--soft); max-width: 52ch; }
+.page .endActions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
+
+/* ---- the player over the page ---- */
+.dialog { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0; border: 0; background: transparent; overflow: auto; }
+.dialog::backdrop { background: rgba(8, 8, 10, .86); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.dialog[open] { display: grid; place-items: center; }
+:global(html):has(.dialog[open]) { overflow: hidden; }
+.dialog .player { width: min(1100px, 92vw); padding: 24px 0; }
+.dialog .playerPortrait { width: min(420px, 92vw, calc((86vh - 120px) * 9 / 16)); }
+.dialog .screen { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 16px; background: #000; box-shadow: 0 30px 80px rgba(0, 0, 0, .5); }
+.dialog .playerPortrait .screen { aspect-ratio: 9 / 16; }
+.dialog .screen iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.dialog .caption { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px 32px; margin-top: 20px; }
+.dialog .captionTitle { font: 600 1.25rem/1.3 var(--f-display); letter-spacing: -.015em; color: #fff; margin: 0 0 4px; }
+.dialog .captionMeta { display: flex; gap: 14px; margin: 0; font-size: 14px; color: #A1A1A6; }
+.dialog .captionLinks { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 2px 0 0; font-size: 15px; font-weight: 600; }
+.dialog .captionLinks a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, .35); text-underline-offset: 4px; }
+.dialog .captionLinks a:hover { color: #fff; text-decoration-color: #fff; }
+.dialog .close {
+  position: fixed; top: 20px; right: 20px; width: 44px; height: 44px; display: grid; place-items: center;
+  border: 0; border-radius: 50%; background: rgba(255, 255, 255, .14); color: #fff; cursor: pointer; transition: background .2s var(--ease);
+}
+.dialog .close:hover { background: rgba(255, 255, 255, .26); }
+.dialog .close:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.dialog .close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+
+@media (prefers-reduced-motion: reduce) {
+  .page .media { transition: none; }
+  .page .card:hover .media { transform: none; }
+}
+@media (max-width: 1000px) {
+  .page .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .page .end { grid-template-columns: minmax(0, 1fr); }
+  .page .endActions { justify-content: flex-start; }
+}
+@media (max-width: 620px) {
+  .page .hero { padding-top: 112px; padding-bottom: 40px; }
+  .page .grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .page .end { margin: 80px 0 88px; border-radius: 22px; }
+}

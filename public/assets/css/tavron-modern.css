@@ -1649,3 +1649,29 @@
   .tv-tblock--4 > div:nth-last-child(2):nth-child(even) { border-bottom: 1px solid var(--rule); }
   .tv .tv-sp__act .tv-btn { flex: 1 1 100%; }
 }
+
+/* ---- contact page: a navy band behind the heading, with the form and contact cards starting
+   inside it and running down onto the light ground. The band is drawn behind .tv-doc__top and
+   ends 170px into it, so it always meets the cards however long the heading wraps. ---- */
+.tv-doc--contact { position: relative; isolation: isolate; overflow: hidden; background: var(--doc-ground); }
+.tv-doc--contact .tv-doc__top { position: relative; }
+.tv-doc--contact .tv-doc__top::before {
+  content: ""; position: absolute; z-index: -1; left: 50%; bottom: calc(100% - 170px);
+  width: 100vw; height: 2400px; transform: translateX(-50%);
+  background-color: var(--ink);
+  /* the drawing-sheet grid of the process drawings, in white */
+  background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size: 32px 32px; background-position: center bottom;
+}
+.tv-doc--contact .tv-doc__crumb a { color: rgba(255,255,255,.72); }
+.tv-doc--contact .tv-doc__crumb a:hover { color: #fff; }
+.tv-doc--contact .tv-doc__crumb [aria-current] { color: #fff; }
+.tv-doc--contact .tv-doc__crumb li + li::before { color: rgba(255,255,255,.3); }
+.tv .tv-doc--contact .tv-doc__label { color: #66D5FF; }
+.tv .tv-doc--contact .tv-doc__title { color: #fff; }
+.tv .tv-doc--contact .tv-doc__intro { color: rgba(255,255,255,.78); }
+@media (max-width: 991px) { .tv-doc--contact .tv-doc__top::before { bottom: calc(100% - 120px); } }
+
+/* plant pages: an equipment photo's badge is its item number on the drawing, or none */
+.tv-numbered .tv-plant-built .tv-strip__img::after { counter-increment: none; content: attr(data-item); }
+.tv-numbered .tv-plant-built .tv-strip__img:not([data-item])::after { display: none; }

@@ -22,6 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
+        {/* Every link on the site is relative (assets/…, contact.html). This makes them resolve from the
+            site root, so pages in folders (news/<item>) load the same CSS, images and links. */}
+        <base href="/" />
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Sora:wght@400..800&display=swap"
           rel="stylesheet"

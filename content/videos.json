@@ -1,0 +1,75 @@
+[
+  {
+    "youtube": "https://www.youtube.com/watch?v=oBUtaCO1OV4",
+    "title": "Falling film evaporator",
+    "date": "2016-08-20",
+    "duration": "1:17",
+    "related": {
+      "label": "Evaporators",
+      "href": "evaporators.html"
+    }
+  },
+  {
+    "youtube": "https://www.youtube.com/watch?v=FXpsxRV8BRE",
+    "title": "CIP system",
+    "date": "2016-08-20",
+    "duration": "1:07",
+    "related": {
+      "label": "CIP systems",
+      "href": "cipsystem.html"
+    }
+  },
+  {
+    "youtube": "https://www.youtube.com/watch?v=nwZqRNYkA6I",
+    "title": "Milk and juice process plant",
+    "date": "2016-08-20",
+    "duration": "0:46",
+    "related": {
+      "label": "Liquid milk plants",
+      "href": "milkprocessing.html"
+    }
+  },
+  {
+    "youtube": "https://www.youtube.com/watch?v=TKxdc96h6QQ",
+    "title": "Milk spray dryer",
+    "date": "2016-08-20",
+    "duration": "0:21",
+    "related": {
+      "label": "Spray dryers",
+      "href": "spray.html"
+    }
+  },
+  {
+    "youtube": "https://www.youtube.com/watch?v=a9Bj0X5vP00",
+    "title": "Milk powder drying",
+    "date": "2016-08-20",
+    "duration": "2:00",
+    "related": {
+      "label": "Milk powder plants",
+      "href": "milkpowder.html"
+    },
+    "portrait": true
+  },
+  {
+    "youtube": "https://www.youtube.com/watch?v=Z-ezrIpMRFY",
+    "title": "Milk plant",
+    "date": "2016-08-20",
+    "duration": "2:18",
+    "related": {
+      "label": "Liquid milk plants",
+      "href": "milkprocessing.html"
+    },
+    "portrait": true
+  },
+  {
+    "youtube": "https://www.youtube.com/watch?v=DNshV4cpd7A",
+    "title": "Milk by-product plant",
+    "date": "2016-08-20",
+    "duration": "0:25",
+    "related": {
+      "label": "Dairy plants",
+      "href": "dairy.html"
+    },
+    "portrait": true
+  }
+]

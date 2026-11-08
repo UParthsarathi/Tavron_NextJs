@@ -1,4 +1,4 @@
-import { Ask, Doc, Links, More, Section } from "@/components/Doc";
+import { common, Plant, photos } from "@/components/Plant";
 import { Site } from "@/components/Site";
 
 export default function Page() {
@@ -11,152 +11,68 @@ export default function Page() {
       active="menu_butter"
       wa="to discuss a butter and ghee plant"
     >
-      <Doc
-        parent="turnkey"
-        name="Butter &amp; Ghee"
-        title="Butter &amp; Ghee Plants"
-        label="Turnkey plant"
-        intro="Butter and ghee equipment from 50 L to 10,000 L: butter churns, butter melting vats, ghee boilers, settling and storage tanks and ghee clarifiers, all in SS 304 / SS 316. Built by Tavron Engineers in Chennai, India, since 2004."
-      >
-        <div className="tv-doc__top">
-          <figure className="tv-figure tv-doc__photo tv-doc__photo--fit">
-            <img src="assets/img/projects/butter-processing/ButterChurn.jpg" width="404" height="311" alt="Stainless-steel butter churn barrel on a blue frame with geared drive" data-lightbox="assets/img/projects/butter-processing/ButterChurn.jpg" />
-          </figure>
-          <div className="tv-doc__stack">
-            <div className="tv-tablewrap">
-              <table className="tv-table">
-                <thead>
-                  <tr>
-                    <th scope="col">Equipment</th>
-                    <th scope="col">Capacity</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Butter churn</th>
-                    <td>50 L to 5,000 L</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Butter melting vat</th>
-                    <td>100 L to 5,000 L</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Ghee boiler</th>
-                    <td>100 L to 5,000 L</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Ghee settling and storage tank</th>
-                    <td>100 L to 10,000 L</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Ghee clarifier</th>
-                    <td>500 LPH and 1,000 LPH</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <Section id="butter" label="Butter" title="Butter equipment">
-          <div className="tv-items">
-            <div className="tv-item">
-              <figure className="tv-item__frame">
-                <img src="assets/img/projects/butter-processing/ButterMeltingVAT.jpg" width="500" height="397" loading="lazy" alt="Rectangular butter melting vat" data-lightbox="assets/img/projects/butter-processing/ButterMeltingVAT.jpg" />
-              </figure>
-              <div className="tv-item__body">
-                <h3>Butter melting vat</h3>
-                <ul className="tv-ticks">
-                  <li>Agitator for better melting</li>
-                  <li>Hot water system with steam control valves</li>
-                  <li>Laser-welded dimple jacket optional</li>
-                  <li>Adjustable ball feet</li>
-                </ul>
-              </div>
-            </div>
-            <div className="tv-item">
-              <div className="tv-item__body">
-                <h3>Butter churn</h3>
-                <ul className="tv-ticks">
-                  <li>Barrel in SS 304 / SS 316; SS or carbon-steel supports</li>
-                  <li>Geared drive with AC drive for variable speed</li>
-                  <li>Brake motor for fine positioning</li>
-                  <li>Doors that open easily; sight glass and CIP spray ball</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </Section>
-        <Section id="ghee" label="Ghee" title="Ghee equipment">
-          <div className="tv-items">
-            <div className="tv-item">
-              <figure className="tv-item__frame">
-                <img src="assets/img/projects/ghee-processing/ghee_boiler.jpg" width="448" height="556" loading="lazy" alt="Ghee boiler with top-mounted agitator drive" data-lightbox="assets/img/projects/ghee-processing/ghee_boiler.jpg" />
-              </figure>
-              <div className="tv-item__body">
-                <h3>Ghee boiler</h3>
-                <ul className="tv-ticks">
-                  <li>Hemispherical, or conical with laser-welded dimple plate</li>
-                  <li>Agitator with AC drive for speed control</li>
-                  <li>Steam control valve</li>
-                  <li>Adjustable ball feet for easier piping</li>
-                </ul>
-              </div>
-            </div>
-            <div className="tv-item">
-              <figure className="tv-item__frame">
-                <img src="assets/img/projects/ghee-processing/ghee-setting-tank.jpg" width="300" height="857" loading="lazy" alt="Conical ghee settling tank on legs" data-lightbox="assets/img/projects/ghee-processing/ghee-setting-tank.jpg" />
-              </figure>
-              <div className="tv-item__body">
-                <h3>Ghee settling and storage tanks</h3>
-                <ul className="tv-ticks">
-                  <li>Conical, with or without agitator</li>
-                  <li>With or without insulation</li>
-                  <li>Finished to international standard</li>
-                </ul>
-              </div>
-            </div>
-            <div className="tv-item">
-              <figure className="tv-item__frame">
-                <img src="assets/img/projects/ghee-processing/ghee-clarifier.jpg" width="500" height="500" loading="lazy" alt="Ghee clarifier" data-lightbox="assets/img/projects/ghee-processing/ghee-clarifier.jpg" />
-              </figure>
-              <div className="tv-item__body">
-                <h3>Ghee clarifier</h3>
-                <ul className="tv-ticks">
-                  <li>Bowls in SS 304 / SS 316</li>
-                  <li>Solid-retaining or auto-discharge bowl</li>
-                  <li>Motor with clutch for a smooth start</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </Section>
-        <Ask
-          title="Planning a plant?"
-          text="Send your capacity and product mix. We'll come back with a scheme and a budget."
-        />
-        <More>
-          <div>
-            <Links
-              title="Brochures"
-              items={[
-                ["Butter & ghee plant", "downloads/Butter%20&%20Ghee%20Plant.pdf", "507 KB"],
-                ["Butter churn", "downloads/Butter%20CHURN.pdf", "208 KB"],
-                ["Ghee plant", "downloads/Ghee%20Plant.pdf", "252 KB"],
-              ]}
-            />
-          </div>
-          <div>
-            <Links
-              title="Related"
-              items={[
-                ["Ghee Processing", "gheeprocessing.html"],
-                ["Khova Pans", "KhovaProcessing.html"],
-                ["Dimple Jacket Tanks", "dimpleJacket.html"],
-              ]}
-            />
-          </div>
-        </More>
-      </Doc>
+      <Plant
+        crumb="Butter & ghee"
+        title="Butter and ghee plants"
+        intro="From cream to butter and on to ghee: butter churns, melting vats, ghee boilers, settling tanks and clarifiers from 50 L to 10,000 L, in SS 304 / SS 316, built by Tavron Engineers, Chennai."
+        product="Cream, butter and ghee"
+        input="Cream in"
+        output="Ghee to packing"
+        stations={[
+          { kind: "churn", part: 1, name: "Butter churn" },
+          { kind: "vat", part: 2, name: "Butter\nmelting vat", steam: true },
+          { kind: "vat", part: 3, name: "Ghee boiler", steam: true },
+          { kind: "cone", part: 4, name: "Settling tank" },
+          { kind: "clarifier", part: 5, name: "Ghee clarifier" },
+        ]}
+        parts={[
+          { name: "Butter churn", spec: "From 50 L; barrel in SS 304 / SS 316; geared drive with AC drive for variable speed, brake motor for fine positioning; sight glass and CIP spray ball" },
+          { name: "Butter melting vat", spec: "Agitator for better melting; hot water system with steam control valves; laser-welded dimple jacket optional" },
+          { name: "Ghee boiler", href: "gheeprocessing.html", spec: "Hemispherical, or conical with laser-welded dimple plate; agitator with AC drive for speed control; steam control valve" },
+          { name: "Ghee settling and storage tanks", href: "gheeprocessing.html", spec: "Conical, with or without agitator or insulation, to 10,000 L" },
+          { name: "Ghee clarifier", href: "gheeprocessing.html", spec: "Bowls in SS 304 / SS 316, solid-retaining or auto-discharge; motor with clutch for a smooth start" },
+          common.cip,
+        ]}
+        cip={6}
+        sheetTitle="Butter and ghee plant"
+        facts={[
+          ["Range", "50 L to 10,000 L"],
+          ["Heating", "Steam, with control valves"],
+          ["Construction", "SS 304 / SS 316"],
+          ["Cleaning", "CIP"],
+        ]}
+        sections={[
+          {
+            title: "Butter, then ghee",
+            aside: "One line can make butter, ghee, or both.",
+            rows: [
+              ["Butter equipment", "Butter churns from 50 L, with doors that open easily, and butter melting vats with an agitator and a hot water system on steam control valves."],
+              ["Ghee equipment", <>
+                <p>Ghee boilers, conical settling and storage tanks to 10,000 L, and ghee clarifiers with solid-retaining or auto-discharge bowls.</p>
+                <p><a href="gheeprocessing.html">Ghee plants</a></p>
+              </>],
+            ],
+          },
+        ]}
+        built={[
+          { img: ["assets/img/projects/butter-processing/ButterChurn.jpg", 404, 311, "Stainless-steel butter churn barrel on a blue frame with geared drive"], name: "Butter churn", note: "Item 1" },
+          { img: ["assets/img/projects/butter-processing/ButterMeltingVAT.jpg", 500, 397, "Butter melting vat with agitator"], name: "Butter melting vat", note: "Item 2" },
+          { img: ["assets/img/projects/ghee-processing/ghee_boiler.jpg", 448, 556, "Ghee boiler with agitator drive"], name: "Ghee boiler", note: "Item 3" },
+          { img: ["assets/img/projects/ghee-processing/ghee-setting-tank.jpg", 300, 857, "Tall conical ghee settling tank"], name: "Ghee settling tank", note: "Item 4" },
+          { img: ["assets/img/projects/ghee-processing/ghee-clarifier.jpg", 500, 500, "Ghee clarifier"], name: "Ghee clarifier", note: "Item 5" },
+          { img: photos.cip, name: "CIP unit", note: "Item 6" },
+        ]}
+        close={{
+          title: "Planning a butter and ghee plant?",
+          needs: ["How much cream or butter a day", "Your products: butter, ghee or both", "The site: building, space and utilities"],
+          files: [
+            ["Butter & ghee plant brochure", "downloads/Butter%20&%20Ghee%20Plant.pdf", "507 KB"],
+            ["Butter churn", "downloads/Butter%20CHURN.pdf", "208 KB"],
+            ["Ghee plants", "gheeprocessing.html"],
+          ],
+        }}
+        wa="to discuss a butter and ghee plant"
+      />
     </Site>
   );
 }

@@ -1,0 +1,147 @@
+/* News: a factory logbook. Each year is a band with its number pinned at the left while its news
+   scrolls past; on an item's page, a list (e.g. what left the factory) is set out like a ruled,
+   ticked-off consignment note.
+   --tag is the item type's colour: amber for dispatches (the crane and the trucks), the brand cyan
+   for events. It marks things (squares, ticks, underlines); it is never the colour of text.
+   Every rule starts with .page: two classes outrank the global ".tv h2", ".tv p" and ".tv a". */
+
+.page {
+  --tag: var(--slate);
+  --hair: rgba(10, 26, 42, .12);
+  background: var(--paper);
+  color: var(--ink-2);
+}
+.page[data-type="event"], .page [data-type="event"] { --tag: var(--accent); }
+.page[data-type="dispatch"], .page [data-type="dispatch"] { --tag: var(--amber); }
+.page .wrap { width: 100%; max-width: 1340px; margin-inline: auto; padding-inline: var(--gutter); }
+.page a:focus-visible { outline: 2px solid var(--accent-600); outline-offset: 3px; border-radius: 3px; }
+
+/* ---- page head ---- */
+.page .hero { padding-top: 132px; padding-bottom: 56px; }
+.page .crumb { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 28px; padding: 0; font-size: 14px; color: var(--muted); }
+.page .crumb li { min-width: 0; }
+.page .crumb li + li::before { content: "/"; margin-right: 6px; color: rgba(10, 26, 42, .3); }
+.page .crumb li[aria-current] { max-width: 42ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.page .crumb a { color: var(--slate); }
+.page .crumb a:hover { color: var(--accent-700); }
+.page .title {
+  font: 700 clamp(2.8rem, 1.6rem + 4.4vw, 5.6rem)/1 var(--f-display); letter-spacing: -.04em;
+  color: var(--ink); margin: 0 0 20px;
+}
+.page .articleTitle { font-size: clamp(2.1rem, 1.3rem + 2.6vw, 3.6rem); line-height: 1.06; letter-spacing: -.03em; max-width: 22ch; text-wrap: balance; }
+.page .lede { font-size: 1.2rem; line-height: 1.6; color: var(--slate); max-width: 56ch; margin: 0; }
+
+/* type and date */
+.page .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin: 0 0 12px; font-size: 14px; color: var(--muted); }
+.page .tag { display: inline-flex; align-items: center; gap: 8px; font-weight: 650; color: var(--ink); }
+.page .tag::before { content: ""; width: 10px; height: 10px; border-radius: 2px; background: var(--tag); }
+
+/* ---- the log ---- */
+.page .year {
+  display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 24px 48px;
+  padding: 28px 0 64px; border-top: 1.5px solid var(--ink);
+  overflow: visible; /* the global "section { overflow: hidden }" would stop the year sticking */
+}
+.page .yearNum {
+  position: sticky; top: 92px; align-self: start; margin: 0;
+  font: 700 clamp(3.2rem, 2rem + 4vw, 6.5rem)/.9 var(--f-display); letter-spacing: -.05em;
+  color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.page .yearItems { display: grid; min-width: 0; }
+
+/* a row: photo and text; the title's link stretches over the whole row */
+.page .row { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 20px 36px; align-items: start; padding-bottom: 36px; }
+.page .row + .row { padding-top: 36px; border-top: 1px solid var(--hair); }
+.page .row > .rowText:first-child { grid-column: 1 / -1; }
+.page .rowPhoto { display: block; margin: 0; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 12px; background: var(--surface); }
+.page .rowPhoto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.page .rowText { min-width: 0; }
+.page .rowTitle { font: 650 1.55rem/1.2 var(--f-display); letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.page .rowTitle a {
+  color: var(--ink); text-decoration: underline; text-decoration-color: transparent;
+  text-decoration-thickness: 3px; text-underline-offset: 6px; transition: text-decoration-color .2s var(--ease);
+}
+.page .rowTitle a::after { content: ""; position: absolute; inset: 0; }
+.page .row:hover .rowTitle a { color: var(--ink); text-decoration-color: var(--tag); }
+.page .rowSummary { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--slate); max-width: 52ch; }
+
+/* the newest item leads: a wider photo and a bigger headline, centred on each other. The photo
+   is capped at 640px so a small photo from the admin is never blown up past its own size. */
+.page .lead { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: center; gap: 24px 48px; }
+.page .lead .rowPhoto { max-width: 640px; aspect-ratio: 4 / 3; border-radius: 16px; }
+.page .lead .rowTitle { font-size: clamp(1.9rem, 1.4rem + 1vw, 2.4rem); line-height: 1.1; letter-spacing: -.03em; }
+.page .lead .rowSummary { font-size: 1.12rem; }
+
+/* ---- an item's page ---- */
+.page .photo { display: block; margin: 0 auto; }
+/* never wider than the photo itself, so a small upload stays sharp */
+.page .photo img { display: block; width: auto; max-width: 100%; height: auto; max-height: 78vh; border-radius: 16px; cursor: zoom-in; }
+.page .body { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px 72px; align-items: start; padding-top: 56px; }
+.page .text p { font-size: 1.12rem; line-height: 1.75; color: var(--ink-2); max-width: 62ch; margin: 0 0 1.1em; }
+.page .text .links { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 0; }
+.page .links small { margin-left: 4px; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+
+/* the consignment note */
+.page .note { background: #fff; border: 1.5px solid var(--ink); border-radius: 4px; }
+.page .noteHead {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 16px;
+  padding: 14px 18px; border-bottom: 1.5px solid var(--ink);
+}
+.page .noteHead h2 { font: 700 1.05rem/1.3 var(--f-display); letter-spacing: -.01em; color: var(--ink); margin: 0; }
+.page .noteHead p { margin: 0; font-size: 13px; color: var(--muted); }
+.page .note ul { list-style: none; margin: 0; padding: 0; }
+.page .note li { position: relative; padding: 11px 18px 11px 48px; font-size: .98rem; line-height: 1.45; color: var(--ink-2); }
+.page .note li + li { border-top: 1px solid var(--hair); }
+/* a ticked box in the item type's colour */
+.page .note li::before {
+  content: ""; position: absolute; left: 18px; top: 13px; width: 17px; height: 17px;
+  border: 1.5px solid var(--ink); border-radius: 3px; background: color-mix(in srgb, var(--tag) 40%, #fff);
+}
+.page .note li::after {
+  content: ""; position: absolute; left: 24px; top: 15.5px; width: 5px; height: 9px;
+  border: solid var(--ink); border-width: 0 2px 2px 0; transform: rotate(45deg);
+}
+
+.page .more { padding-top: 96px; overflow: visible; }
+.page .moreTitle { font: 700 1.6rem/1.2 var(--f-display); letter-spacing: -.02em; color: var(--ink); margin: 0 0 28px; padding-top: 24px; border-top: 1.5px solid var(--ink); }
+.page .moreItems .row { grid-template-columns: minmax(0, 3fr) minmax(0, 7fr); }
+.page .moreItems .rowTitle { font-size: 1.25rem; }
+
+/* ---- closing band ---- */
+.page .band { margin-top: 96px; padding: 72px 0; background: var(--ink); overflow: visible; }
+.page .bandGrid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 28px 64px; align-items: center; }
+.page .bandTitle { font: 700 clamp(1.7rem, 1.2rem + 1.3vw, 2.3rem)/1.12 var(--f-display); letter-spacing: -.025em; color: #fff; margin: 0; }
+.page .bandText { color: rgba(255, 255, 255, .74); font-size: 1.08rem; line-height: 1.6; margin: 14px 0 0; max-width: 52ch; }
+.page .bandActions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: flex-end; }
+
+/* ---- smaller screens ---- */
+@media (max-width: 900px) {
+  .page .year, .page .row, .page .body, .page .bandGrid, .page .moreItems .row { grid-template-columns: minmax(0, 1fr); }
+  .page .yearNum { position: static; font-size: 3.4rem; }
+  .page .year { padding-bottom: 48px; }
+  .page .bandActions { justify-content: flex-start; }
+}
+@media (max-width: 640px) {
+  .page .hero { padding-top: 108px; padding-bottom: 40px; }
+  .page .row + .row { padding-top: 28px; }
+  .page .row { padding-bottom: 28px; }
+  .page .rowTitle { font-size: 1.35rem; }
+  .page .body { padding-top: 36px; }
+  .page .more { padding-top: 64px; }
+  .page .band { margin-top: 72px; padding: 56px 0; }
+}
+
+/* ---- the newest items on the home page ---- */
+.stripHead { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 32px; margin-bottom: clamp(32px, 4vw, 54px); }
+.stripHead > :global(.tv-head) { margin-bottom: 0; }
+.page.strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; background: transparent; }
+.page.strip .row { grid-template-columns: minmax(0, 1fr); align-content: start; gap: 16px; padding: 0; border: 0; }
+.page.strip .rowTitle { font-size: 1.25rem; }
+.page.strip .rowSummary { font-size: .95rem; }
+@media (max-width: 900px) {
+  .page.strip { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .page.strip .row { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+}
+@media (max-width: 560px) {
+  .page.strip .row { grid-template-columns: minmax(0, 1fr); }
+}

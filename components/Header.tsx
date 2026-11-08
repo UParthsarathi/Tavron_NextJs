@@ -3,7 +3,7 @@ import { entry, industries, products, type Item } from "./catalog";
 const menu: Item[] = [
   { label: "Home", href: "index.html", id: "menu_home" },
   { label: "About Us", items: [{ label: "Company Profile", href: "about.html", id: "menu_about" }, "Why Tavron?"] },
-  { label: "Industries", items: industries.map((i) => i.label) },
+  { label: "Industries", items: industries.map(({ label, slug }) => ({ label, href: `${slug}.html`, id: `menu_${slug}` })) },
   {
     label: "Turnkey Solutions",
     items: [

@@ -3,6 +3,7 @@
 //   <Doc …>                    breadcrumb, title, intro, quotation button
 //     <Specs items={…} />      key facts beside the hero photo
 //     <Section …>…</Section>   a numbered content section
+//       <Faq items={…} />      questions and answers
 //     <Ask … />                enquiry box
 //     <More>                   brochures and related pages, one <div> per column
 //       <div><Links … /></div>
@@ -11,7 +12,6 @@
 
 const parents = {
   products: ["Products", "index.html#products"],
-  turnkey: ["Turnkey solutions", "index.html#turnkey"],
   about: ["About us", "about.html"],
 } as const;
 
@@ -27,14 +27,16 @@ type DocProps = {
   quote?: boolean;
   /** without the tv-doc--train modifier */
   plain?: boolean;
+  /** an extra class for a page-specific look, e.g. "tv-doc--contact" */
+  className?: string;
   children: React.ReactNode;
 };
 
-export function Doc({ parent, name, title = name, label, intro, quote = true, plain, children }: DocProps) {
+export function Doc({ parent, name, title = name, label, intro, quote = true, plain, className, children }: DocProps) {
   const p = parent && parents[parent];
   return (
     <main id="main">
-      <article className={plain ? "tv-doc" : "tv-doc tv-doc--train"}>
+      <article className={["tv-doc", !plain && "tv-doc--train", className].filter(Boolean).join(" ")}>
         <div className="tv-doc__wrap">
           <ol className="tv-doc__crumb">
             <li><a href="index.html">Home</a></li>
@@ -75,6 +77,20 @@ export function Section({ id, label, title, children }: { id: string; label: str
   );
 }
 
+/** [question, answer] pairs; the first starts open */
+export function Faq({ items }: { items: [string, string][] }) {
+  return (
+    <div className="tv-faq">
+      {items.map(([q, a], i) => (
+        <details key={i} open={i === 0}>
+          <summary><h3>{q}</h3><i className="ri-arrow-down-s-line"></i></summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  );
+}
+
 type AskProps = { title: string; text: string; button?: string; photo?: React.ReactNode; id?: string };
 
 export function Ask({ title, text, button, photo, id = "enquire" }: AskProps) {
@@ -103,7 +119,7 @@ export function More({ id = "more", children }: { id?: string; children: React.R
 
 /** [label, href, size?]: a .pdf opens in a new tab with a download icon (and its size, e.g. "4.0 MB"),
  *  an http link opens in a new tab, anything else is a page on the site. */
-type Link = [label: string, href: string, size?: string];
+export type Link = [label: string, href: string, size?: string];
 
 export function Links({ title, items }: { title: string; items: Link[] }) {
   return (
