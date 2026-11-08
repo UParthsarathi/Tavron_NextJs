@@ -1,83 +1,50 @@
-import { Footer } from "@/components/generated/Footer";
-import { Header } from "@/components/generated/Header";
-import { MobileNav, MobileNavToggle } from "@/components/MobileNav";
+import { Site } from "@/components/Site";
 
 export default function Page() {
   return (
-    <>
-      <title>Liquid Milk Processing Plant Manufacturer | Turnkey Dairy Plants | Tavron Engineers</title>
-      <meta name="description" content="Turnkey liquid milk processing plants: insulated storage, HTST pasteurisation from 50 to 30,000 LPH, sanitary pumps, ice water and CIP, designed and commissioned by Tavron." />
-      <meta name="theme-color" content="#0a1a2a" />
-      <link rel="canonical" href="https://tavron.net/milkprocessing.html" />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://tavron.net/milkprocessing.html" />
-      <meta property="og:title" content="Liquid Milk Processing Plant Manufacturer | Turnkey Dairy Plants | Tavron Engineers" />
-      <meta property="og:description" content="Turnkey liquid milk plants: insulated storage, HTST pasteurisation from 50 to 30,000 LPH, sanitary pumps, ice water and CIP." />
-      <meta property="og:image" content="https://tavron.net/assets/img/projects/MilkProcessing/milkpro7b.jpg" />
-      <MobileNavToggle />
-      {" "}
-      <header id="header" data-load="templates/_header.html" data-active-menu="menu_milk" className="fixed-top"><Header active="menu_milk" /></header>
-      {" "}
+    <Site
+      title="Liquid Milk Processing Plant Manufacturer | Turnkey Dairy Plants | Tavron Engineers"
+      description="Turnkey liquid milk processing plants: insulated storage, HTST pasteurisation from 50 to 30,000 LPH, sanitary pumps, ice water and CIP, designed and commissioned by Tavron."
+      ogDescription="Turnkey liquid milk plants: insulated storage, HTST pasteurisation from 50 to 30,000 LPH, sanitary pumps, ice water and CIP."
+      path="milkprocessing.html"
+      image="assets/img/projects/MilkProcessing/milkpro7b.jpg"
+      active="menu_milk"
+      wa="to discuss a liquid milk plant"
+    >
       <main id="main" className="tv-sp">
-        {" "}
         <div className="tv-sp__wrap">
-          {" "}
           <ol className="tv-sp__crumb">
-            {" "}
             <li><a href="index.html">Home</a></li>
-            {" "}
             <li><a href="index.html#turnkey">Turnkey solutions</a></li>
-            {" "}
             <li aria-current="page">Liquid milk</li>
-            {" "}
           </ol>
-          {" "}
           <div className="tv-sp__head">
-            {" "}
             <h1 className="tv-sp__title">Liquid milk processing plants</h1>
-            {" "}
             <div>
-              {" "}
               <p className="tv-sp__intro">From raw milk storage to packing: tanks, pumps, HTST pasteurisation, ice water and CIP, designed, built and commissioned as one plant by Tavron Engineers, Chennai.</p>
-              {" "}
               <div className="tv-sp__act">
-                {" "}
                 <a href="contact.html" className="tv-btn tv-btn--primary">Plan a plant with us</a>
-                {" "}
                 <a href="tel:+919176610713" className="tv-sp__tel">+91 91766 10713</a>
-                {" "}
               </div>
-              {" "}
             </div>
-            {" "}
           </div>
-          {" "}
           <figure className="tv-sheet" aria-labelledby="milk-sheet-title">
-            {" "}
             <div className="tv-sheet__zones" aria-hidden="true">
-              {" "}
               <span style={{"left":"16.6%","top":"2px"}}>1</span>
               <span style={{"left":"33.3%","top":"2px"}}>2</span>
               <span style={{"left":"50%","top":"2px"}}>3</span>
               <span style={{"left":"66.6%","top":"2px"}}>4</span>
               <span style={{"left":"83.3%","top":"2px"}}>5</span>
-              {" "}
               <span style={{"left":"3px","top":"25%"}}>A</span>
               <span style={{"left":"3px","top":"50%"}}>B</span>
               <span style={{"left":"3px","top":"75%"}}>C</span>
-              {" "}
               <span style={{"right":"3px","top":"25%"}}>A</span>
               <span style={{"right":"3px","top":"50%"}}>B</span>
               <span style={{"right":"3px","top":"75%"}}>C</span>
-              {" "}
             </div>
-            {" "}
             <div className="tv-sheet__in">
-              {" "}
               <div className="tv-sheet__draw">
-                {" "}
                 <p className="tv-sheet__hint">Scroll sideways to follow the line.</p>
-                {" "}
                 <svg viewBox="0 0 1200 470" role="img" aria-labelledby="milk-svg-t milk-svg-d">
                   <title id="milk-svg-t">Process flow of a liquid milk plant</title>
                   <desc id="milk-svg-d">Raw milk enters an insulated storage tank, is pumped through an HTST pasteurizer made up of a balance tank, a plate heat exchanger with regeneration, heating and cooling sections, and a holding tube, then goes to an insulated pasteurised milk tank and is pumped to packing. Steam feeds the heating section and ice water from an ice bank feeds the cooling section. A CIP unit is connected to both tanks and the pasteurizer. Each piece of equipment links to its own page.</desc>
@@ -181,35 +148,26 @@ export default function Page() {
                     </g>
                   </a>
                 </svg>
-                {" "}
                 <ul className="tv-sheet__legend">
-                  {" "}
                   <li>
                     <i></i>
                     Milk
                   </li>
-                  {" "}
                   <li>
                     <i className="is-steam"></i>
                     Steam
                   </li>
-                  {" "}
                   <li>
                     <i className="is-chill"></i>
                     Ice water
                   </li>
-                  {" "}
                   <li>
                     <i className="is-cip"></i>
                     CIP supply
                   </li>
-                  {" "}
                 </ul>
-                {" "}
               </div>
-              {" "}
               <div className="tv-sheet__foot">
-                {" "}
                 <table className="tv-parts">
                   <thead>
                     <tr>
@@ -251,260 +209,152 @@ export default function Page() {
                     </tr>
                   </tbody>
                 </table>
-                {" "}
                 <dl className="tv-tblock">
-                  {" "}
                   <div className="tv-tblock__title">
                     <dt>Title</dt>
                     <dd id="milk-sheet-title">Liquid milk processing plant</dd>
                   </div>
-                  {" "}
                   <div>
                     <dt>Pasteurisation</dt>
                     <dd>HTST, 50 to 30,000 LPH</dd>
                   </div>
-                  {" "}
                   <div>
                     <dt>Operation</dt>
                     <dd>Manual or automatic</dd>
                   </div>
-                  {" "}
                   <div>
                     <dt>Control</dt>
                     <dd>PLC with SCADA</dd>
                   </div>
-                  {" "}
                   <div>
                     <dt>Cleaning</dt>
                     <dd>CIP</dd>
                   </div>
-                  {" "}
                   <div>
                     <dt>Scope</dt>
                     <dd>Turnkey</dd>
                   </div>
-                  {" "}
                   <div>
                     <dt>Scale</dt>
                     <dd>Not to scale</dd>
                   </div>
-                  {" "}
                   <div className="tv-tblock__wide">
                     <dt>Made by</dt>
                     <dd>Tavron Engineers, Chennai. ISO&nbsp;9001:2015</dd>
                   </div>
-                  {" "}
                 </dl>
-                {" "}
               </div>
-              {" "}
             </div>
-            {" "}
           </figure>
-          {" "}
           <section className="tv-sp__sec" aria-labelledby="milk-scada">
-            {" "}
             <div>
-              {" "}
               <h2 className="tv-sp__h2" id="milk-scada">The whole line on one screen</h2>
-              {" "}
               <p className="tv-sp__aside">Plants run manually or automatically. Automatic plants use PLC control, with a SCADA screen of the whole line.</p>
-              {" "}
             </div>
-            {" "}
             <figure className="tv-doccert" style={{"maxWidth":"none"}}>
-              {" "}
               <img src="assets/img/projects/milkprocessing.jpg" width="798" height="478" loading="lazy" alt="SCADA screen of a milk processing system showing the pasteurizer, tanks and pumps" data-lightbox="assets/img/projects/milkprocessing.jpg" />
-              {" "}
               <figcaption>SCADA screen from a Tavron milk processing system. Click to enlarge.</figcaption>
-              {" "}
             </figure>
-            {" "}
           </section>
-          {" "}
           <section className="tv-sp__sec" aria-labelledby="milk-ice">
-            {" "}
             <div>
-              {" "}
               <h2 className="tv-sp__h2" id="milk-ice">Ice water, sized to the milk</h2>
-              {" "}
               <p className="tv-sp__aside">The ice bank stores enough ice to cool the plant's designed milk capacity.</p>
-              {" "}
             </div>
-            {" "}
             <dl className="tv-rows">
-              {" "}
               <div>
-                {" "}
                 <dt>Freon ice bank</dt>
-                {" "}
                 <dd><p>For 1,000 to 20,000 LPD. R22, R404A or another Freon on request; scroll or reciprocating compressor; mild steel or stainless-steel construction.</p></dd>
-                {" "}
               </div>
-              {" "}
               <div>
-                {" "}
                 <dt>Ammonia ice bank</dt>
-                {" "}
                 <dd>
                   <p>For 10,000 to 5,00,000 LPD, and larger on request. Atmospheric, shell-and-tube, plate or evaporative condenser. Return water chiller, falling film chiller and glycol system as options.</p>
-                  {" "}
                   <p><a href="RefrigerationEquipments.html">Refrigeration systems</a></p>
                 </dd>
-                {" "}
               </div>
-              {" "}
             </dl>
-            {" "}
           </section>
-          {" "}
           <section className="tv-sp__sec" aria-labelledby="milk-floor">
-            {" "}
             <div>
-              {" "}
               <h2 className="tv-sp__h2" id="milk-floor">The equipment, built</h2>
-              {" "}
               <p className="tv-sp__aside">Click a photo to see it larger.</p>
-              {" "}
             </div>
-            {" "}
             <div className="tv-strip">
-              {" "}
               <figure>
-                {" "}
                 <div className="tv-strip__img"><img src="assets/img/projects/MilkProcessing/milkpro7b.jpg" width="700" height="525" loading="lazy" alt="Skid-mounted HTST milk pasteurizer with plate heat exchanger" data-lightbox="assets/img/projects/MilkProcessing/milkpro7b.jpg" /></div>
-                {" "}
                 <figcaption>
                   <strong>HTST pasteurizer</strong>
                   Skid-mounted, item 3
                 </figcaption>
-                {" "}
               </figure>
-              {" "}
               <figure>
-                {" "}
                 <div className="tv-strip__img"><img src="assets/img/projects/MilkProcessing/milkpro6b.jpg" width="500" height="707" loading="lazy" alt="Insulated vertical milk tank with top agitator" data-lightbox="assets/img/projects/MilkProcessing/milkpro6b.jpg" /></div>
-                {" "}
                 <figcaption>
                   <strong>Insulated milk tank</strong>
                   Items 1 and 4
                 </figcaption>
-                {" "}
               </figure>
-              {" "}
               <figure>
-                {" "}
                 <div className="tv-strip__img"><img src="assets/img/projects/MilkProcessing/milkpro1b.jpg" width="700" height="791" loading="lazy" alt="Plate heat exchanger on a stainless-steel frame" data-lightbox="assets/img/projects/MilkProcessing/milkpro1b.jpg" /></div>
-                {" "}
                 <figcaption>
                   <strong>Plate heat exchanger</strong>
                   {"The heart of item 3. "}
                   <a href="plateheat.html">Plate heat exchangers</a>
                 </figcaption>
-                {" "}
               </figure>
-              {" "}
               <figure>
-                {" "}
                 <div className="tv-strip__img"><img src="assets/img/pumps/pumps1b.jpg" width="500" height="400" loading="lazy" alt="Stainless-steel centrifugal pumps" data-lightbox="assets/img/pumps/pumps1b.jpg" /></div>
-                {" "}
                 <figcaption>
                   <strong>SS centrifugal pumps</strong>
                   Item 2
                 </figcaption>
-                {" "}
               </figure>
-              {" "}
               <figure>
-                {" "}
                 <div className="tv-strip__img"><img src="assets/img/projects/MilkProcessing/milkpro2b.jpg" width="700" height="394" loading="lazy" alt="Skid-mounted CIP system with tanks and control panel" data-lightbox="assets/img/projects/MilkProcessing/milkpro2b.jpg" /></div>
-                {" "}
                 <figcaption>
                   <strong>CIP unit</strong>
                   Item 6
                 </figcaption>
-                {" "}
               </figure>
-              {" "}
               <figure>
-                {" "}
                 <div className="tv-strip__img"><img src="assets/img/projects/LiquidEggProcessing/IBT.jpg" width="500" height="361" loading="lazy" alt="Freon ice bank tank with condensing units" data-lightbox="assets/img/projects/LiquidEggProcessing/IBT.jpg" /></div>
-                {" "}
                 <figcaption>
                   <strong>Freon ice bank</strong>
                   Item 5
                 </figcaption>
-                {" "}
               </figure>
-              {" "}
             </div>
-            {" "}
           </section>
-          {" "}
         </div>
-        {" "}
         <section className="tv-close" aria-labelledby="milk-close">
-          {" "}
           <div className="tv-sp__wrap tv-close__in">
-            {" "}
             <div>
-              {" "}
               <h2 id="milk-close">Planning a liquid milk plant?</h2>
-              {" "}
               <p>Send us three things and we'll come back with a scheme and a budget.</p>
-              {" "}
             </div>
-            {" "}
             <div>
-              {" "}
               <ul className="tv-close__need">
-                {" "}
                 <li>How much milk a day, in litres</li>
-                {" "}
                 <li>Your product mix: milk, curd, flavoured milk, anything else</li>
-                {" "}
                 <li>The site: building, space and utilities</li>
-                {" "}
               </ul>
-              {" "}
               <div className="tv-sp__act">
-                {" "}
                 <a href="contact.html" className="tv-btn tv-btn--primary">Plan a plant with us</a>
-                {" "}
                 <a href="https://wa.me/919176610713?text=Hi%20Tavron%2C%20I%27d%20like%20to%20discuss%20a%20liquid%20milk%20plant." className="tv-btn tv-btn--ghost" target="_blank" rel="noopener">WhatsApp us</a>
-                {" "}
               </div>
-              {" "}
               <div className="tv-close__files">
-                {" "}
                 <a href="downloads/Milk%20Plant.pdf" target="_blank" rel="noopener">
                   {"Milk plant brochure "}
                   <small>PDF, 1.8&nbsp;MB</small>
                 </a>
-                {" "}
                 <a href="milkpowder.html">Milk powder plants</a>
-                {" "}
                 <a href="CurdYogurtProcessing.html">Curd and yogurt plants</a>
-                {" "}
               </div>
-              {" "}
             </div>
-            {" "}
           </div>
-          {" "}
         </section>
-        {" "}
       </main>
-      {" "}
-      <footer id="footer" data-load="templates/_footer.html"><Footer /></footer>
-      {" "}
-      <a className="tv-wa" href="https://wa.me/919176610713?text=Hi%20Tavron%2C%20I%27d%20like%20to%20discuss%20a%20liquid%20milk%20plant." target="_blank" rel="noopener" aria-label="Chat with Tavron Engineers on WhatsApp">
-        {" "}
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.14h-.01a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.21 8.21 0 0 1-1.26-4.37c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.22-8.24 8.22Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.05s.88 2.38 1 2.54c.12.17 1.73 2.64 4.19 3.7.58.26 1.04.41 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"></path></svg>
-        {" "}
-      </a>
-      {" "}
-      <MobileNav active="menu_milk" />
-    </>
+    </Site>
   );
 }

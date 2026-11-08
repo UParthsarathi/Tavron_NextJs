@@ -16,7 +16,7 @@ const vendorCss = [
 
 // The <head> tail that every old page shares, from the favicons on, in the same order.
 // React hoists <title>, <meta> and non-stylesheet <link> into <head> in render order, ahead of the
-// stylesheets. Each page renders its own title, meta tags and canonical link; the favicons and
+// stylesheets. Each page's <Site> (components/Site.tsx) renders the title, meta tags and canonical link; the favicons and
 // preconnects are rendered after the page so they land behind those, where the old pages had them.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
