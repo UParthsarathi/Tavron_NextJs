@@ -1,24 +1,32 @@
 import type { ReactNode } from "react";
-import type { Link } from "./Doc";
+import { Faq, type Link } from "./Doc";
 
-// A turnkey plant page, laid out like the liquid milk page: title, a process drawing of the plant
-// with its parts list and title block, sections about the plant, photos of the equipment, and a
-// closing band. The drawing is generated from `stations`: each is a piece of equipment, drawn as a
-// symbol on the product line in process order, numbered to match the parts list.
+// A turnkey plant page: title, a process drawing of the plant with its parts list and title block,
+// sections about the plant, how a project runs, dairies we work with, photos of the equipment,
+// questions buyers ask, and a closing band. The drawing is generated from `stations`: each is a
+// piece of equipment, drawn as a symbol on the product line in process order, numbered to match
+// the parts list. The liquid milk page draws its own (app/milkprocessing/Drawing.tsx).
 
 type Kind =
   | "tank" | "cone" | "vat" | "pump" | "htst" | "phe" | "tubular" | "churn" | "press" | "clarifier" | "decanter"
-  | "homogeniser" | "freezer" | "sterilizer" | "evaporator" | "dryer" | "fluidbed" | "membrane" | "ringdryer" | "coldstore";
+  | "homogeniser" | "freezer" | "sterilizer" | "evaporator" | "dryer" | "fluidbed" | "membrane" | "ringdryer" | "coldstore"
+  | "filler";
 
 export type Station = {
   kind: Kind;
   /** its number in `parts` (from 1) */
   part: number;
-  /** label on the drawing; "\n" breaks the line. A pump is labelled "Pump" */
+  /** label on the drawing; "\n" breaks the line. A pump's is not shown */
   name: string;
   /** steam or ice water piped to it */
   steam?: boolean;
   chill?: boolean;
+  /** a bank of this many, drawn smaller; tanks, vats and fillers are fed from a header */
+  count?: number;
+  /** a stream leaving here, e.g. "Whey out" */
+  out?: string;
+  /** the stage this station starts, named over the drawing; it runs to the next zone or the row's end */
+  zone?: string;
 };
 export type Part = { name: string; href?: string; spec: string };
 /** [src, width, height, alt] */
@@ -29,19 +37,29 @@ type Props = {
   title: string;
   intro: string;
   /** the product on the drawing's legend, e.g. "Milk" */
-  product: string;
+  product?: string;
   /** "Raw milk in", "To packing" */
-  input: string;
-  output: string;
-  stations: Station[];
+  input?: string;
+  output?: string;
+  /** the generated drawing's equipment, in process order; or `drawing`, a drawing made for this plant */
+  stations?: Station[];
+  /** a second row: the line carries on into it, or, with `from` (a station's place in the first
+   *  row, from 1), a side line fed by that station's stream; `output` labels its end */
+  then?: { stations: Station[]; from?: number; output?: string };
+  drawing?: ReactNode;
   parts: Part[];
-  /** parts-list numbers of the ice bank and CIP unit, drawn below the line, if the plant has them */
+  /** parts-list numbers of the ice bank and CIP unit, shown in the utilities strip, if the plant has them */
   iceBank?: number;
   cip?: number;
   /** the drawing's title block: its title, then four facts (Scope, Scale and Made by are added) */
   sheetTitle: string;
   facts: [string, string][];
-  sections?: { title: string; aside: string; rows?: [string, ReactNode][]; images?: { img: Img; caption: string }[] }[];
+  /** sections after the drawing: ruled rows, photos, or any `body` */
+  sections?: { title: string; aside: ReactNode; rows?: [string, ReactNode][]; images?: { img: Img; caption: string }[]; body?: ReactNode }[];
+  /** questions and answers after the photos, also published as FAQPage data */
+  faq?: [string, string][];
+  /** "Dairies we work with", shown unless false */
+  dairies?: boolean;
   /** "The equipment, built": photos, each with its name and which item it is */
   built: { img: Img; name: string; note: ReactNode; item?: number }[];
   close: { title: string; needs: string[]; files: Link[] };
@@ -69,18 +87,18 @@ export const photos = {
 
 // ---- the drawing ----
 
-const Y = 230; // the product line
-const CIP_Y = 362; // the CIP supply header
+const Y = 230; // the product line the symbols are drawn on
 const MAJOR = { w: 0, minor: false };
 
-type Shape = { w: number; minor?: boolean; body: (cx: number) => ReactNode; bottom: number; cip?: (cx: number) => [number, number]; steamX?: (cx: number) => number; chillX?: (cx: number) => number; nameDX?: number };
+/** `outDX`: where a stream leaves the symbol, from its centre (default a little left of it) */
+type Shape = { w: number; minor?: boolean; body: (cx: number) => ReactNode; bottom: number; steamX?: (cx: number) => number; chillX?: (cx: number) => number; nameDX?: number; outDX?: number };
 
 const L = "tv-dw-l", F = "tv-dw-f", T = "tv-dw-t";
 const fluid = "#E5F8FF";
 
 const shapes: Record<Kind, Shape> = {
   tank: {
-    ...MAJOR, w: 140, bottom: 300, cip: (cx) => [cx, 304],
+    ...MAJOR, w: 140, bottom: 300,
     body: (cx) => (
       <>
         <path className={F} d={`M${cx - 45} 300 V146 Q${cx - 45} 118 ${cx} 112 Q${cx + 45} 118 ${cx + 45} 146 V300 Z`} />
@@ -92,7 +110,7 @@ const shapes: Record<Kind, Shape> = {
     ),
   },
   cone: {
-    ...MAJOR, w: 120, bottom: 300, cip: (cx) => [cx, 306],
+    ...MAJOR, w: 120, bottom: 300,
     body: (cx) => (
       <>
         <path className={F} d={`M${cx - 40} 124 H${cx + 40} V250 L${cx} 296 L${cx - 40} 250 Z`} />
@@ -102,7 +120,7 @@ const shapes: Record<Kind, Shape> = {
     ),
   },
   vat: {
-    ...MAJOR, w: 150, bottom: 304, cip: (cx) => [cx + 30, 300],
+    ...MAJOR, w: 150, bottom: 304,
     body: (cx) => (
       <>
         <path className={L} d={`M${cx - 56} 158 V246 Q${cx - 56} 304 ${cx} 304 Q${cx + 56} 304 ${cx + 56} 246 V158`} />
@@ -123,7 +141,7 @@ const shapes: Record<Kind, Shape> = {
     ),
   },
   htst: {
-    ...MAJOR, w: 300, bottom: 296, nameDX: 8, cip: (cx) => [cx - 108, 252], steamX: (cx) => cx, chillX: (cx) => cx + 44,
+    ...MAJOR, w: 300, bottom: 296, nameDX: 8, steamX: (cx) => cx, chillX: (cx) => cx + 44,
     body: (cx) => (
       <>
         <rect className={F} x={cx - 128} y="200" width="40" height="52" rx="5" />
@@ -141,7 +159,7 @@ const shapes: Record<Kind, Shape> = {
     ),
   },
   phe: {
-    ...MAJOR, w: 130, bottom: 296, cip: (cx) => [cx - 40, 296], steamX: (cx) => cx - 16, chillX: (cx) => cx + 16,
+    ...MAJOR, w: 130, bottom: 296, steamX: (cx) => cx - 16, chillX: (cx) => cx + 16,
     body: (cx) => (
       <>
         <rect x={cx - 50} y="170" width="100" height="120" fill="url(#pl-plates)" stroke="#0a1a2a" strokeWidth="1.8" />
@@ -151,7 +169,7 @@ const shapes: Record<Kind, Shape> = {
     ),
   },
   tubular: {
-    ...MAJOR, w: 150, bottom: 298, cip: (cx) => [cx - 44, 298], steamX: (cx) => cx + 20,
+    ...MAJOR, w: 150, bottom: 298, steamX: (cx) => cx + 20,
     body: (cx) => {
       const d = `M${cx - 60} 172 H${cx + 48} A12 12 0 0 1 ${cx + 48} 196 H${cx - 48} A12 12 0 0 0 ${cx - 48} 220 H${cx + 48} A12 12 0 0 1 ${cx + 48} 244 H${cx - 48} A12 12 0 0 0 ${cx - 48} 268 H${cx + 60}`;
       return (
@@ -165,7 +183,7 @@ const shapes: Record<Kind, Shape> = {
     },
   },
   churn: {
-    ...MAJOR, w: 200, bottom: 272, cip: (cx) => [cx, 276],
+    ...MAJOR, w: 200, bottom: 272,
     body: (cx) => (
       <>
         <rect className={F} x={cx - 50} y="168" width="100" height="104" rx="36" />
@@ -215,7 +233,7 @@ const shapes: Record<Kind, Shape> = {
     ),
   },
   homogeniser: {
-    ...MAJOR, w: 120, bottom: 272, cip: (cx) => [cx - 20, 276],
+    ...MAJOR, w: 120, bottom: 272,
     body: (cx) => (
       <>
         <path className={L} d={`M${cx - 20} 146 V128 M${cx} 146 V128 M${cx + 20} 146 V128 M${cx - 36} 272 V332 M${cx + 36} 272 V332`} />
@@ -227,7 +245,7 @@ const shapes: Record<Kind, Shape> = {
     ),
   },
   freezer: {
-    ...MAJOR, w: 170, bottom: 300, cip: (cx) => [cx + 40, 304],
+    ...MAJOR, w: 170, bottom: 300,
     body: (cx) => (
       <>
         <rect className={F} x={cx - 62} y="236" width="124" height="64" rx="3" />
@@ -253,7 +271,7 @@ const shapes: Record<Kind, Shape> = {
     ),
   },
   evaporator: {
-    ...MAJOR, w: 180, bottom: 292, cip: (cx) => [cx - 31, 296], steamX: (cx) => cx - 65,
+    ...MAJOR, w: 180, bottom: 292, steamX: (cx) => cx - 65,
     body: (cx) => (
       <>
         <path className={L} d={`M${cx - 65} 112 V104 H${cx + 52} V150 M${cx - 82} 292 V332 M${cx + 30} 292 V332 M${cx + 68} 246 V332`} />
@@ -293,7 +311,7 @@ const shapes: Record<Kind, Shape> = {
     ),
   },
   membrane: {
-    ...MAJOR, w: 150, bottom: 280, cip: (cx) => [cx, 284],
+    ...MAJOR, w: 150, bottom: 280,
     body: (cx) => (
       <>
         <path className={L} d={`M${cx - 62} 150 V332 M${cx + 62} 150 V332`} />
@@ -324,117 +342,319 @@ const shapes: Record<Kind, Shape> = {
       </>
     ),
   },
+  filler: {
+    ...MAJOR, w: 70, bottom: 296,
+    body: (cx) => (
+      <>
+        <rect className={F} x={cx - 8} y="150" width="16" height="16" rx="2" />
+        <rect className={F} x={cx - 15} y="166" width="30" height="118" rx="2" />
+        <rect className={L} x={cx - 9} y="180" width="18" height="30" fill="#fff" />
+        <path className={L} d={`M${cx - 6} 284 V296 H${cx + 6} V284`} />
+      </>
+    ),
+  },
 };
 
-function Name({ x, name }: { x: number; name: string }) {
-  const lines = name.split("\n");
+// ---- parts for drawings made for one plant (see app/milkprocessing/Drawing.tsx) ----
+
+/** symbol `kind` with its product line at (x, y), scaled by s; lines keep their weight when scaled */
+export function Sym({ kind, x, y, s = 1 }: { kind: Kind; x: number; y: number; s?: number }) {
+  return <g className={s === 1 ? undefined : "tv-dw-sc"} transform={`translate(${x} ${y}) scale(${s}) translate(0 ${-Y})`}>{shapes[kind].body(0)}</g>;
+}
+
+/** a parts-list number */
+export const Ball = ({ x, y, n }: { x: number; y: number; n: number }) => (
+  <g className="tv-dw-ball"><circle cx={x} cy={y} r="13" /><text x={x} y={y}>{n}</text></g>
+);
+
+/** a piece of equipment, linked to its page if it has one; `hit` [x, y, w, h] lights up on hover */
+export function Stn({ part, hit, children }: { part: Part; hit: [number, number, number, number]; children: ReactNode }) {
+  if (!part.href) return <g>{children}</g>;
   return (
-    <text className="tv-dw-name" x={x} y={lines.length > 1 ? 66 : 84}>
-      {lines.map((l, i) => <tspan key={i} x={x} dy={i ? 18 : 0}>{l}</tspan>)}
-    </text>
+    <a href={part.href} className="tv-dw-stn" aria-label={part.name}>
+      <rect className="tv-dw-hit" x={hit[0]} y={hit[1]} width={hit[2]} height={hit[3]} />
+      {children}
+    </a>
   );
 }
 
+export function Defs() {
+  return (
+    <defs>
+      <marker id="pl-a-p" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#00AEEF" /></marker>
+      <marker id="pl-a-h" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#D9731A" /></marker>
+      <marker id="pl-a-c" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#3B5BCC" /></marker>
+      <marker id="pl-a-i" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#0a1a2a" /></marker>
+      <pattern id="pl-plates" width="6" height="10" patternUnits="userSpaceOnUse">
+        <rect width="6" height="10" fill="#EEF3F6" />
+        <path d="M3 0 V10" stroke="#3f5468" strokeWidth="1" />
+      </pattern>
+    </defs>
+  );
+}
+
+export function Legend({ product, steam, chill, cip }: { product: string; steam?: boolean; chill?: boolean; cip?: boolean }) {
+  return (
+    <ul className="tv-sheet__legend">
+      <li><i></i>{product}</li>
+      {steam && <li><i className="is-steam"></i>Steam</li>}
+      {chill && <li><i className="is-chill"></i>Ice water</li>}
+      {cip && <li><i className="is-cip"></i>CIP supply</li>}
+    </ul>
+  );
+}
+
+/** product pipe; traced in when the drawing appears */
+export const Pipe = ({ d, arrow }: { d: string; arrow?: boolean }) => (
+  <path className="tv-dw-prod tv-dw-trace" pathLength={1} d={d} markerEnd={arrow ? "url(#pl-a-p)" : undefined} />
+);
+/** an arrowhead showing which way a long product run flows, at x, y */
+export const Dir = ({ x, y, left }: { x: number; y: number; left?: boolean }) => (
+  <path className="tv-dw-prod tv-dw-after" d={`M${left ? x + 1 : x - 1} ${y} H${x}`} markerEnd="url(#pl-a-p)" />
+);
+export const Label = ({ x, y, children, start }: { x: number; y: number; children: string; start?: boolean }) => (
+  <text className="tv-dw-name" x={x} y={y} style={start ? { textAnchor: "start" } : undefined}>{children}</text>
+);
+/** stages named along the top of a row: [from x, to x, name] */
+export function Zones({ y, zones }: { y: number; zones: [number, number, string][] }) {
+  return (
+    <g aria-hidden="true">
+      {zones.map(([a, b, label]) => (
+        <g key={label + a}>
+          <text className="tv-dw-view" x={(a + b) / 2} y={y}>{label}</text>
+          <path className="tv-dw-dim" d={`M${a + 4} ${y + 12} V${y + 6} H${b - 4} V${y + 12}`} />
+        </g>
+      ))}
+    </g>
+  );
+}
+
+// ---- the generated drawing ----
+//
+// Rows of stations on a product line. A row is ROW high: stage names along the top, part numbers
+// and names, the equipment on the line (RY down), then streams leaving the line and steam or ice
+// water arriving. A second row either carries the line on, returning along the gap between the
+// rows, or is a side line fed by a stream from the first. The utilities sit in a strip at the foot.
+
+const ROW = 440, RY = 240, GAP = ROW - 22;
+type Pt = [number, number];
+type Placed = { st: Station; sh: Shape; cx: number; w: number; s: number; members: number[]; Y: number; r0: number };
+
+/** banks of these are fed from a header above and, but for fillers, emptied into one below */
+const BANK: Partial<Record<Kind, { s: number; body: number; inlet: Pt; outlet?: Pt }>> = {
+  tank: { s: 0.62, body: 90, inlet: [27, 119], outlet: [0, 300] },
+  cone: { s: 0.62, body: 92, inlet: [20, 124], outlet: [0, 306] },
+  vat: { s: 0.62, body: 128, inlet: [30, 140], outlet: [0, 304] },
+  filler: { s: 1, body: 30, inlet: [0, 150] },
+};
+
+/** spread a row's stations evenly between x0 and x1 */
+function layRow(sts: Station[], r0: number, x0: number, x1: number): Placed[] {
+  const dims = sts.map((st) => {
+    const sh = shapes[st.kind], n = st.count ?? 1, b = BANK[st.kind];
+    if (n === 1) return { w: sh.w, s: 1, pitch: 0, n };
+    const s = b?.s ?? 0.62, body = (b?.body ?? sh.w * 0.75) * s, pitch = body + 14;
+    return { w: (n - 1) * pitch + body + 28, s, pitch, n };
+  });
+  const total = dims.reduce((a, d) => a + d.w, 0);
+  const gap = sts.length > 1 ? Math.max(8, (x1 - x0 - total) / (sts.length - 1)) : 0;
+  let x = sts.length > 1 ? x0 : (x0 + x1 - total) / 2;
+  return sts.map((st, i) => {
+    const d = dims[i], cx = Math.round(x + d.w / 2);
+    x += d.w + gap;
+    const members = Array.from({ length: d.n }, (_, k) => Math.round(cx - ((d.n - 1) * d.pitch) / 2 + k * d.pitch));
+    return { st, sh: shapes[st.kind], cx, w: d.w, s: d.s, members, Y: r0 + RY, r0 };
+  });
+}
+
+/** a point on a symbol (drawn about Y) at x, scaled as the station is */
+const at = (q: Placed, x: number, [dx, y]: Pt): Pt => [Math.round(x + dx * q.s), Math.round(q.Y + (y - Y) * q.s)];
+const foot = (q: Placed) => Math.round(q.Y + (q.sh.bottom - Y) * q.s);
+/** the header a bank empties into */
+const low = (q: Placed) => Math.round(q.Y + (332 - Y) * q.s + 12);
+/** where a station's stream leaves it */
+function outAt(q: Placed): Pt {
+  if (q.members.length > 1 && BANK[q.st.kind]?.outlet) return [q.members[0], low(q)];
+  return [Math.round(q.cx + (q.sh.outDX ?? -q.sh.w * 0.22) * q.s), foot(q)];
+}
+const pathOf = (pts: Pt[]) => pts.map(([x, y], i) => `${i ? "L" : "M"}${x} ${y}`).join(" ");
+const listOf = (ns: number[]) => (ns.length > 1 ? `${ns.slice(0, -1).join(", ")} and ${ns[ns.length - 1]}` : `${ns[0]}`);
+
 function Drawing({ p }: { p: Props }) {
-  // place the stations evenly along the line, clear of the in and out labels (about 6.6px a character)
-  const total = p.stations.reduce((a, s) => a + shapes[s.kind].w, 0);
-  const x0 = Math.max(110, 52 + p.input.length * 6.6), x1 = Math.min(1060, 1150 - p.output.length * 6.6);
-  const gap = p.stations.length > 1 ? Math.max(8, (x1 - x0 - total) / (p.stations.length - 1)) : 0;
-  let x = p.stations.length > 1 ? x0 : (x0 + x1 - total) / 2;
-  const placed = p.stations.map((st) => {
-    const sh = shapes[st.kind];
-    const cx = Math.round(x + sh.w / 2);
-    x += sh.w + gap;
-    return { st, sh, cx, part: p.parts[st.part - 1] };
+  const { input = "", output = "", then } = p;
+  const side = then?.from !== undefined;
+  const rowsIn = [p.stations ?? [], ...(then ? [then.stations] : [])];
+  // each row ends at a label, or (a row the line carries on from) at the return
+  const ends = rowsIn.map((_, i) => (i === rowsIn.length - 1 ? (side ? then?.output ?? "" : output) : side ? output : null));
+  const rows = rowsIn.map((sts, i) => {
+    const end = ends[i];
+    return layRow(sts, i * ROW, i === 0 ? Math.max(110, 52 + input.length * 6.6) : 90, end === null ? 1120 : Math.min(1060, 1150 - end.length * 6.6));
+  });
+  const all = rows.flat();
+
+  // the product pipes: runs of line, broken where a bank's header feeds its tanks
+  const runs: { pts: Pt[]; packs?: boolean; label?: string }[] = [];
+  const drops: string[] = [];
+  let cur: Pt[] = [[40, RY]];
+  let packs = false;
+  const pass = (row: Placed[]) => {
+    for (const q of row) {
+      const b = BANK[q.st.kind];
+      if (q.members.length < 2 || !b) continue;
+      const left = q.cx - q.w / 2 + 6, right = q.cx + q.w / 2 - 6, hi = q.Y - 104;
+      const ins = q.members.map((m) => at(q, m, b.inlet));
+      cur.push([left, q.Y], [left, hi], [ins[ins.length - 1][0], hi]);
+      runs.push({ pts: cur });
+      for (const [x, y] of ins) drops.push(`M${x} ${hi} V${y}`);
+      if (b.outlet) {
+        const outs = q.members.map((m) => at(q, m, b.outlet!));
+        for (const [x, y] of outs.slice(1)) drops.push(`M${x} ${y} V${low(q)}`);
+        cur = [outs[0], [outs[0][0], low(q)], [right, low(q)], [right, q.Y]];
+      } else {
+        // what leaves fillers is packs, carried on a conveyor below them
+        packs = true;
+        cur = [[left, q.Y + 76]];
+      }
+    }
+  };
+  const finish = (Yr: number, label: string) => {
+    cur.push([1166, packs ? Yr + 76 : Yr]);
+    runs.push({ pts: cur, packs, label });
+  };
+  pass(rows[0]);
+  if (rows.length === 1) finish(RY, output);
+  else if (!side) {
+    cur.push([1170, RY], [1170, GAP], [40, GAP], [40, ROW + RY]);
+    pass(rows[1]);
+    finish(ROW + RY, output);
+  } else {
+    finish(RY, output);
+    const o = outAt(rows[0][then!.from! - 1]);
+    packs = false;
+    cur = [o, [o[0], GAP], [40, GAP], [40, ROW + RY]];
+    pass(rows[1]);
+    finish(ROW + RY, then!.output ?? "");
+  }
+
+  // the utilities strip
+  const chillParts = [...new Set(all.filter((q) => q.st.chill).map((q) => q.st.part))];
+  const steam = all.some((q) => q.st.steam);
+  const utils: { part?: number; box?: string; bw?: number; note: string }[] = [];
+  if (p.iceBank) utils.push({ part: p.iceBank, box: "Ice bank (IBT)", bw: 140, note: chillParts.length ? `Ice water to item${chillParts.length > 1 ? "s" : ""} ${listOf(chillParts)}` : "Ice water for the plant" });
+  if (p.cip) utils.push({ part: p.cip, box: "CIP unit", bw: 100, note: "Cleans the line in place" });
+  if (steam) utils.push({ note: "Steam from the boiler" });
+  const uy = (rows.length - 1) * ROW + 416;
+  const height = utils.length ? uy + 62 : uy - 6;
+  let ux = 120;
+  const placedUtils = utils.map((u) => {
+    const x = ux;
+    ux += (u.box ? u.bw! + 46 : 38) + u.note.length * 6.8 + 48;
+    return { ...u, x };
   });
 
-  const steam = placed.filter((s) => s.st.steam);
-  const chill = placed.filter((s) => s.st.chill);
-  const cips = p.cip ? placed.filter((s) => s.sh.cip).map((s) => s.sh.cip!(s.cx)) : [];
-  const sx = (s: (typeof placed)[number]) => (s.sh.steamX ? s.sh.steamX(s.cx) : s.cx);
-  const chx = (s: (typeof placed)[number]) => (s.sh.chillX ? s.sh.chillX(s.cx) : s.cx);
-  const ib = p.iceBank && chill.length ? { x: chx(chill[0]) - 14, part: p.parts[p.iceBank - 1] } : null;
-  const names = placed.filter((s) => !s.sh.minor).map((s) => s.st.name.replace("\n", " "));
+  const names = all.filter((q) => !q.sh.minor).map((q) => q.st.name.replace("\n", " "));
+  const outs = all.filter((q, i) => q.st.out && !(side && q.r0 === 0 && i === then!.from! - 1));
 
   return (
-    <svg viewBox="0 0 1200 470" role="img" aria-labelledby="pl-svg-t pl-svg-d">
+    <svg viewBox={`0 0 1200 ${height}`} role="img" aria-labelledby="pl-svg-t pl-svg-d">
       <title id="pl-svg-t">{`Process flow of a ${p.sheetTitle.toLowerCase()}`}</title>
-      <desc id="pl-svg-d">{`${p.input}, through ${names.join(", ")}, ${p.output.toLowerCase()}.${steam.length ? " Steam heats the line." : ""}${chill.length ? " Ice water cools it." : ""}${p.cip ? " A CIP unit cleans it." : ""} Each piece of equipment links to its own page.`}</desc>
-      <defs>
-        <marker id="pl-a-p" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#00AEEF" /></marker>
-        <marker id="pl-a-h" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#D9731A" /></marker>
-        <marker id="pl-a-c" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#3B5BCC" /></marker>
-        <pattern id="pl-plates" width="6" height="10" patternUnits="userSpaceOnUse">
-          <rect width="6" height="10" fill="#EEF3F6" />
-          <path d="M3 0 V10" stroke="#3f5468" strokeWidth="1" />
-        </pattern>
-      </defs>
+      <desc id="pl-svg-d">{`${input}, through ${names.join(", ")}, ${output.toLowerCase()}.${steam ? " Steam heats the line." : ""}${chillParts.length ? " Ice water cools it." : ""}${p.cip ? " A CIP unit cleans it." : ""} Each piece of equipment links to its own page.`}</desc>
+      <Defs />
 
-      <path className="tv-dw-prod tv-dw-trace" pathLength="1" d={`M40 ${Y} H1166`} markerEnd="url(#pl-a-p)" />
-      <text className="tv-dw-note" x="40" y="214" style={{ textAnchor: "start" }}>{p.input}</text>
-      <text className="tv-dw-note tv-dw-after" x="1166" y="214" style={{ textAnchor: "end" }}>{p.output}</text>
+      {rows.map((row, i) => {
+        const zones: [number, number, string][] = [];
+        for (const q of row) {
+          const l = q.cx - q.w / 2, r = q.cx + q.w / 2;
+          if (q.st.zone) zones.push([l, r, q.st.zone]);
+          else if (zones.length) zones[zones.length - 1][1] = r;
+        }
+        return <Zones key={i} y={i * ROW + 12} zones={zones} />;
+      })}
 
-      {cips.length > 0 && (
-        <path className="tv-dw-cip" d={cips.map(([cx, cy], i) => (i ? ` M${cx} ${cy} V${CIP_Y}` : `M${cx} ${cy} V${CIP_Y} H1062`)).join("")} />
-      )}
+      <text className="tv-dw-note" x="40" y={RY - 16} style={{ textAnchor: "start" }}>{input}</text>
+      {runs.map(({ pts, packs, label }, i) => (
+        <g key={i}>
+          {packs ? <path className="tv-dw-l" d={pathOf(pts)} markerEnd="url(#pl-a-i)" /> : <Pipe d={pathOf(pts)} arrow={label !== undefined} />}
+          {label && <text className="tv-dw-note tv-dw-after" x="1166" y={pts[pts.length - 1][1] + (packs ? 20 : -16)} style={{ textAnchor: "end" }}>{label}</text>}
+        </g>
+      ))}
+      {drops.map((d) => <Pipe key={d} d={d} />)}
+      {rows.length > 1 && <><Dir x={side ? Math.round((40 + outAt(rows[0][then!.from! - 1])[0]) / 2) : 620} y={GAP} left /><Dir x={66} y={ROW + RY} /></>}
 
-      {steam.map((s) => {
-        const both = s.st.chill && !ib;
+      {outs.map((q) => {
+        const [x, y] = outAt(q);
         return (
-          <g key={`s${s.cx}`}>
-            <path className="tv-dw-steam tv-dw-after" d={`M${sx(s)} 452 V${s.sh.bottom}`} markerEnd="url(#pl-a-h)" />
-            <text className="tv-dw-note" x={both ? sx(s) - 6 : sx(s)} y="466" style={both ? { textAnchor: "end" } : undefined}>Steam</text>
+          <g key={`o${q.r0}-${q.cx}`}>
+            <path className="tv-dw-prod tv-dw-after" d={`M${x} ${y} V${q.Y + 128}`} markerEnd="url(#pl-a-p)" />
+            <text className="tv-dw-note tv-dw-after" x={x} y={q.Y + 154}>{q.st.out}</text>
           </g>
         );
       })}
-      {chill.map((s) => {
-        const x = chx(s);
-        if (!ib)
+      {all.filter((q) => q.st.steam || q.st.chill).map((q) => {
+        if (q.members.length > 1) {
+          // a bank: a supply header under it, an arrow up into each, clear of the outlets
+          const kind = q.st.steam ? "steam" : "chill", xs = q.members.map((m) => m + 14), mid = Math.round((xs[0] + xs[xs.length - 1]) / 2), hy = q.Y + 118;
           return (
-            <g key={`c${s.cx}`}>
-              <path className="tv-dw-chill tv-dw-after" d={`M${x} 452 V${s.sh.bottom}`} markerEnd="url(#pl-a-c)" />
-              <text className="tv-dw-note" x={s.st.steam ? x + 6 : x} y="466" style={s.st.steam ? { textAnchor: "start" } : undefined}>Ice water</text>
+            <g key={`u${q.r0}-${q.cx}`}>
+              <path className={`tv-dw-${kind} tv-dw-after`} d={`M${mid} ${q.Y + 136} V${hy} M${xs[0]} ${hy} H${xs[xs.length - 1]}`} />
+              {xs.map((x) => <path key={x} className={`tv-dw-${kind} tv-dw-after`} d={`M${x} ${hy} V${foot(q) + 6}`} markerEnd={`url(#pl-a-${kind === "steam" ? "h" : "c"})`} />)}
+              <text className="tv-dw-note" x={mid} y={q.Y + 154}>{q.st.steam ? "Steam" : "Ice water"}</text>
             </g>
           );
-        const inBox = x >= ib.x && x <= ib.x + 168;
-        return <path key={`c${s.cx}`} className="tv-dw-chill tv-dw-after" d={inBox ? `M${x} 398 V${s.sh.bottom}` : `M${x < ib.x ? ib.x : ib.x + 168} 415 H${x} V${s.sh.bottom}`} markerEnd="url(#pl-a-c)" />;
+        }
+        let sx = q.cx + (q.sh.steamX?.(0) ?? 0) * q.s, cx = q.cx + (q.sh.chillX?.(0) ?? 0) * q.s;
+        const both = q.st.steam && q.st.chill;
+        if (both && sx === cx) { sx -= 10; cx += 10; }
+        return (
+          <g key={`u${q.r0}-${q.cx}`}>
+            {q.st.steam && <path className="tv-dw-steam tv-dw-after" d={`M${sx} ${q.Y + 136} V${foot(q) + 6}`} markerEnd="url(#pl-a-h)" />}
+            {q.st.steam && <text className="tv-dw-note" x={both ? sx - 6 : sx} y={q.Y + 154} style={both ? { textAnchor: "end" } : undefined}>Steam</text>}
+            {q.st.chill && <path className="tv-dw-chill tv-dw-after" d={`M${cx} ${q.Y + 136} V${foot(q) + 6}`} markerEnd="url(#pl-a-c)" />}
+            {q.st.chill && <text className="tv-dw-note" x={both ? cx + 6 : cx} y={q.Y + 154} style={both ? { textAnchor: "start" } : undefined}>Ice water</text>}
+          </g>
+        );
       })}
 
-      {placed.map(({ st, sh, cx, part }, i) => (
-        <a key={i} href={part.href} className="tv-dw-stn" aria-label={`${st.name.replace("\n", " ")}${part.href ? `: ${part.name}` : ""}`}>
-          {sh.minor ? (
-            <>
-              <rect className="tv-dw-hit" x={cx - 33} y="150" width="66" height="128" />
-              {sh.body(cx)}
-              <g className="tv-dw-ball"><circle cx={cx} cy="176" r="13" /><text x={cx} y="176">{st.part}</text></g>
-              <text className="tv-dw-note" x={cx} y="268">{st.name}</text>
-            </>
-          ) : (
-            <>
-              <rect className="tv-dw-hit" x={cx - sh.w / 2} y="30" width={sh.w} height="312" />
-              {sh.body(cx)}
-              <g className="tv-dw-ball"><circle cx={cx + (sh.nameDX ?? 0)} cy={st.name.includes("\n") ? 36 : 48} r="13" /><text x={cx + (sh.nameDX ?? 0)} y={st.name.includes("\n") ? 36 : 48}>{st.part}</text></g>
-              <Name x={cx + (sh.nameDX ?? 0)} name={st.name} />
-            </>
-          )}
-        </a>
-      ))}
+      {all.map((q, i) => {
+        const lines = q.st.name.split("\n"), nx = q.cx + (q.sh.nameDX ?? 0), first = q.r0 + 94 - 18 * (lines.length - 1);
+        return (
+          <Stn key={i} part={p.parts[q.st.part - 1]} hit={q.sh.minor ? [q.cx - 33, q.Y - 80, 66, 128] : [q.cx - q.w / 2, q.r0 + 26, q.w, RY + 108]}>
+            {q.members.map((m) => <Sym key={m} kind={q.st.kind} x={m} y={q.Y} s={q.s} />)}
+            {q.sh.minor ? (
+              <Ball x={q.cx} y={q.Y - 54} n={q.st.part} />
+            ) : (
+              <>
+                <Ball x={nx} y={first - 36} n={q.st.part} />
+                <text className="tv-dw-name" x={nx} y={first}>
+                  {lines.map((l, k) => <tspan key={k} x={nx} dy={k ? 18 : 0}>{l}</tspan>)}
+                </text>
+              </>
+            )}
+          </Stn>
+        );
+      })}
 
-      {ib && (
-        <a href={ib.part.href} className="tv-dw-stn" aria-label={`Ice water from an ice bank${ib.part.href ? `: ${ib.part.name}` : ""}`}>
-          <rect className="tv-dw-hit" x={ib.x - 10} y="388" width="190" height="66" />
-          <rect className="tv-dw-f" x={ib.x} y="398" width="168" height="34" rx="4" />
-          <text className="tv-dw-sub" x={ib.x + 92} y="420">Ice bank (IBT)</text>
-          <g className="tv-dw-ball"><circle cx={ib.x + 192} cy="415" r="13" /><text x={ib.x + 192} y="415">{p.iceBank}</text></g>
-        </a>
-      )}
-      {p.cip && (
-        <a href={p.parts[p.cip - 1].href} className="tv-dw-stn" aria-label={`CIP unit${p.parts[p.cip - 1].href ? `: ${p.parts[p.cip - 1].name}` : ""}`}>
-          <rect className="tv-dw-hit" x="1052" y="336" width="130" height="56" />
-          <rect className="tv-dw-f" x="1062" y="345" width="104" height="34" rx="4" />
-          <text className="tv-dw-sub" x="1114" y="367">CIP unit</text>
-          <g className="tv-dw-ball"><circle cx="1114" cy="404" r="13" /><text x="1114" y="404">{p.cip}</text></g>
-        </a>
+      {utils.length > 0 && (
+        <>
+          <path className="tv-dw-t" d={`M20 ${uy} H1180`} />
+          <text className="tv-dw-view" x="20" y={uy + 38} style={{ textAnchor: "start" }}>Utilities</text>
+          {placedUtils.map((u) => {
+            if (!u.box) return (
+              <g key={u.note}>
+                <path className="tv-dw-steam" d={`M${u.x} ${uy + 34} H${u.x + 30}`} />
+                <text className="tv-dw-note" x={u.x + 38} y={uy + 38} style={{ textAnchor: "start" }}>{u.note}</text>
+              </g>
+            );
+            return (
+              <Stn key={u.note} part={p.parts[u.part! - 1]} hit={[u.x - 6, uy + 12, u.bw! + 46 + u.note.length * 6.8 + 12, 44]}>
+                <rect className="tv-dw-f" x={u.x} y={uy + 18} width={u.bw} height="32" rx="4" />
+                <text className="tv-dw-sub" x={u.x + u.bw! / 2} y={uy + 39}>{u.box}</text>
+                <Ball x={u.x + u.bw! + 20} y={uy + 34} n={u.part!} />
+                <text className="tv-dw-note" x={u.x + u.bw! + 42} y={uy + 38} style={{ textAnchor: "start" }}>{u.note}</text>
+              </Stn>
+            );
+          })}
+        </>
       )}
     </svg>
   );
@@ -442,9 +662,19 @@ function Drawing({ p }: { p: Props }) {
 
 // ---- the page ----
 
+/** dairies on our client list: [logo in assets/img/clients, name] */
+const dairies: [string, string][] = [
+  ["hatson.png", "Hatsun"], ["heritage.jpg", "Heritage"], ["doodla.jpg", "Dodla Dairy"], ["parag.jpg", "Parag"],
+  ["prabhat.jpg", "Prabhat Dairy"], ["thirumala.jpg", "Thirumala"], ["creamline-jersey.png", "Creamline Jersey"], ["shruthi-milk.png", "Shruthi Milk"],
+  ["kcmilk.jpg", "KC Milk"], ["cowma.jpg", "Cowma Milk"], ["tamil.jpg", "Tamil Paal"], ["vallhabha.jpg", "Vallhabha"],
+];
+
 export function Plant(p: Props) {
-  const steam = p.stations.some((s) => s.steam), chill = p.stations.some((s) => s.chill);
+  const stations = [...(p.stations ?? []), ...(p.then?.stations ?? [])];
+  const steam = stations.some((s) => s.steam), chill = stations.some((s) => s.chill);
   const waHref = "https://wa.me/919176610713?text=" + encodeURIComponent(`Hi Tavron, I'd like ${p.wa}.`).replace(/'/g, "%27");
+  // the plant's brochure, offered beside the main button for visitors still researching
+  const brochure = p.close.files.find(([, href]) => pdf(href));
   return (
     <main id="main" className="tv-sp">
       <div className="tv-sp__wrap">
@@ -459,7 +689,11 @@ export function Plant(p: Props) {
             <p className="tv-sp__intro">{p.intro}</p>
             <div className="tv-sp__act">
               <a href="contact.html" className="tv-btn tv-btn--primary">Plan a plant with us</a>
-              <a href="tel:+919176610713" className="tv-sp__tel">+91 91766 10713</a>
+              {brochure && (
+                <a href={brochure[1]} className="tv-btn tv-btn--ghost" target="_blank" rel="noopener">
+                  {`${brochure[0]} (PDF) `}<i className="ri-download-2-line"></i>
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -473,13 +707,13 @@ export function Plant(p: Props) {
           <div className="tv-sheet__in">
             <div className="tv-sheet__draw">
               <p className="tv-sheet__hint">Scroll sideways to follow the line.</p>
-              <Drawing p={p} />
-              <ul className="tv-sheet__legend">
-                <li><i></i>{p.product}</li>
-                {steam && <li><i className="is-steam"></i>Steam</li>}
-                {chill && <li><i className="is-chill"></i>Ice water</li>}
-                {p.cip && <li><i className="is-cip"></i>CIP supply</li>}
-              </ul>
+              {p.drawing ?? (
+                <>
+                  <Drawing p={p} />
+                  <Legend product={p.product ?? ""} steam={steam} chill={chill} />
+                  <p className="tv-sheet__cap">A typical plant. Detailed P&amp;ID and layout drawings come with your proposal.</p>
+                </>
+              )}
             </div>
             <div className="tv-sheet__foot">
               <table className="tv-parts">
@@ -536,8 +770,36 @@ export function Plant(p: Props) {
                 ))}
               </div>
             )}
+            {sec.body && <div>{sec.body}</div>}
           </section>
         ))}
+
+        <section className="tv-sp__sec" aria-labelledby="pl-project">
+          <div>
+            <h2 className="tv-sp__h2" id="pl-project">How a project runs</h2>
+            <p className="tv-sp__aside">One contract and one point of responsibility, from the first meeting to support after handover.</p>
+          </div>
+          <ol className="tv-seq" style={{ "--n": 3 } as React.CSSProperties}>
+            <li><h3>Define the plant</h3><p>Capacity, product mix and site, agreed first.</p></li>
+            <li><h3>Study the line</h3><p>On an existing plant, where it loses time, yield or heat.</p></li>
+            <li><h3>Engineer it</h3><p>Process scheme, sizing, layout and piping.</p></li>
+            <li><h3>Automate it</h3><p>PLC, HMI, SCADA and instrumentation.</p></li>
+            <li><h3>Commission it</h3><p>Installed and handed over running.</p></li>
+            <li><h3>Support it</h3><p>Contract or resident maintenance, worn parts replaced, controls and software upgraded.</p></li>
+          </ol>
+        </section>
+
+        {p.dairies !== false && (
+          <section className="tv-sp__sec" aria-labelledby="pl-dairies">
+            <div>
+              <h2 className="tv-sp__h2" id="pl-dairies">Dairies we work with</h2>
+              <p className="tv-sp__aside">Some of the dairies on our client list. <a href="clients.html">All clients</a></p>
+            </div>
+            <ul className="tv-logos">
+              {dairies.map(([file, name]) => <li key={file}><img src={`assets/img/clients/${file}`} loading="lazy" alt={name} /></li>)}
+            </ul>
+          </section>
+        )}
 
         <section className="tv-sp__sec" aria-labelledby="pl-built">
           <div>
@@ -561,6 +823,26 @@ export function Plant(p: Props) {
             ))}
           </div>
         </section>
+
+        {p.faq && (
+          <section className="tv-sp__sec" aria-labelledby="pl-faq">
+            <div>
+              <h2 className="tv-sp__h2" id="pl-faq">Questions buyers ask</h2>
+              <p className="tv-sp__aside">Something else? Call <a href="tel:+919176610713">+91&nbsp;91766&nbsp;10713</a>.</p>
+            </div>
+            <Faq items={p.faq} />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: p.faq.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
+                }),
+              }}
+            />
+          </section>
+        )}
       </div>
 
       <section className="tv-close" aria-labelledby="pl-close">

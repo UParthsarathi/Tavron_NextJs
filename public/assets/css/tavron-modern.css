@@ -1493,6 +1493,7 @@
 .tv-dw-l     { fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
 .tv-dw-f     { fill: #EEF3F6; stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
 .tv-dw-t     { fill: none; stroke: var(--draft); stroke-width: 1; }
+.tv-dw-sc *  { vector-effect: non-scaling-stroke; }
 .tv-dw-cl    { fill: none; stroke: var(--rule-2); stroke-width: 1; stroke-dasharray: 18 4 3 4; }
 .tv-dw-proj  { fill: none; stroke: var(--rule); stroke-width: 1; stroke-dasharray: 4 4; }
 .tv-dw-dim   { fill: none; stroke: var(--draft); stroke-width: 1; }
@@ -1577,6 +1578,9 @@
 }
 .tv .tv-seq h3 { font-size: 1.02rem; margin: 0 0 6px; }
 .tv .tv-seq p { font-size: .94rem; color: var(--slate); margin: 0; }
+/* in a page section the steps can wrap, so each row carries its own line */
+.tv-sp__sec .tv-seq { border-top: 0; row-gap: 52px; padding-top: 16px; }
+.tv-sp__sec .tv-seq li { border-top: 1.5px solid var(--ink); }
 
 /* values: the word is the design */
 .tv-values { margin: 0; }
@@ -1675,3 +1679,5 @@
 /* plant pages: an equipment photo's badge is its item number on the drawing, or none */
 .tv-numbered .tv-plant-built .tv-strip__img::after { counter-increment: none; content: attr(data-item); }
 .tv-numbered .tv-plant-built .tv-strip__img:not([data-item])::after { display: none; }
+/* on a plant page numbers mean items on the drawing, so other pictures go unnumbered */
+.tv-numbered .tv-sp .tv-uses__img::after { display: none; }

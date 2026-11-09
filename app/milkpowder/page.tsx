@@ -16,24 +16,24 @@ export default function Page() {
       <Plant
         crumb="Milk powder"
         title="Milk powder plants"
-        intro="From milk to powder: storage, multiple effect evaporation, spray drying, powder separation and fluid bed finishing, with instrument control throughout, built and commissioned by Tavron Engineers, Chennai."
+        intro="From milk to powder: storage, multiple effect evaporation, spray drying from 5 to 1,500 kg/hr water evaporation, powder separation and fluid bed finishing, with instrument control throughout, built and commissioned as one plant."
         product="Milk"
         input="Milk in"
-        output="Powder out"
+        output="Powder to packing"
         stations={[
-          { kind: "tank", part: 1, name: "Milk storage" },
+          { kind: "tank", part: 1, name: "Milk storage", count: 2, zone: "Storage" },
           { kind: "pump", part: 2, name: "Pump" },
-          { kind: "evaporator", part: 3, name: "Multiple effect\nevaporator", steam: true },
-          { kind: "pump", part: 2, name: "Pump" },
+          { kind: "evaporator", part: 3, name: "Multiple effect\nevaporator", steam: true, zone: "Evaporation" },
+          { kind: "pump", part: 2, name: "Pump", zone: "Drying" },
           { kind: "dryer", part: 4, name: "Spray dryer" },
           { kind: "fluidbed", part: 5, name: "Vibro fluid bed" },
         ]}
         parts={[
-          { name: "Milk storage", href: "tanks.html", spec: "PUF-insulated SS 304 / SS 316 tanks, rotary spray ball for CIP" },
+          { name: "Milk storage", href: "tanks.html", spec: "PUF-insulated SS 304 / SS 316 tanks, rotary spray ball for CIP" },
           common.pumps,
-          { name: "Multiple effect evaporator", href: "evaporators.html", spec: "Falling film, rising film or forced circulation, or combined; TVR, MVR optional; calandria tubes to A 319 or ASTM A 249" },
-          { name: "Spray dryer", href: "spray.html", spec: "5 to 1,500 kg/hr water evaporation; rotary atomiser, nozzle or two-fluid; single or multiple cyclones, wet scrubber and bag filters" },
-          { name: "Vibro fluid bed", href: "spray.html", spec: "SS 304 / SS 316, spring-mounted SS or MS legs, easy to open for product inspection" },
+          { name: "Multiple effect evaporator", href: "evaporators.html", spec: "Falling film, rising film or forced circulation, or combined; TVR, MVR optional; calandria tubes to A 319 or ASTM A 249" },
+          { name: "Spray dryer", href: "spray.html", spec: "5 to 1,500 kg/hr water evaporation; rotary atomiser, nozzle or two-fluid; single or multiple cyclones, wet scrubber and bag filters" },
+          { name: "Vibro fluid bed", href: "spray.html", spec: "SS 304 / SS 316, spring-mounted SS or MS legs, easy to open for product inspection" },
           common.cip,
         ]}
         cip={6}
@@ -76,6 +76,15 @@ export default function Page() {
           { img: [`${dir}vibro-fluid-bed.jpg`, 258, 184, "Vibro fluid bed below a spray dryer"], name: "Vibro fluid bed", note: "Item 5" },
           { img: [`${dir}structural-mounted-evaporator.jpg`, 253, 170, "Structure-mounted evaporator"], name: "Structure-mounted evaporator", note: "For industrial duty" },
           { img: [`${dir}Lab-Model-Spray-Dryer.jpg`, 400, 451, "Lab model spray dryer"], name: "Lab model spray dryer", note: "For R&D" },
+        ]}
+        faq={[
+          ["What spray dryer capacities do you build?", "From 5 to 1,500 kg/hr water evaporation, with a rotary atomiser, nozzles or two-fluid atomisation."],
+          ["Which evaporator does a milk powder plant need?", "A multiple effect evaporator: falling film, rising film, forced circulation, or a combination, with TVR or MVR to keep steam consumption down."],
+          ["How is the powder separated from the air?", "Single or multiple cyclones, with a wet scrubber and bag filters as options."],
+          ["How is the powder finished?", "Second-stage drying on a vibro fluid bed, or three-stage drying with a stationary fluid bed and a vibro fluid bed."],
+          ["How is the dryer heated?", "With hot air from steam, direct or indirect oil firing, or thermic fluid."],
+          ["Do you build lab spray dryers?", "Yes: 2 to 25 kg/hr water evaporation, for R&D and education, with a PLC option."],
+          ["What do you need from me for a quote?", "How much milk a day, in litres; the powder you want to make; and the site, with its building, space and utilities. We come back with a scheme and a budget."],
         ]}
         close={{
           title: "Planning a milk powder plant?",

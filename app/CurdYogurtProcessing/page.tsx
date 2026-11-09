@@ -14,23 +14,24 @@ export default function Page() {
       <Plant
         crumb="Curd & yogurt"
         title="Curd and yogurt plants"
-        intro="From milk to packing: HTST pasteurisation, insulated process tanks, plate heat exchangers, sanitary pumps and CIP, built into one plant by Tavron Engineers, Chennai."
+        intro="From milk to filling: HTST pasteurisation from 50 to 30,000 LPH, insulated process tanks of 2,000 to 10,000 L, a plate cooler, sanitary pumps and CIP, built into one plant."
         product="Milk"
         input="Milk in"
-        output="To packing"
+        output="To filling"
         stations={[
-          { kind: "pump", part: 3, name: "Pump" },
-          { kind: "htst", part: 1, name: "HTST pasteurisation", steam: true, chill: true },
-          { kind: "tank", part: 2, name: "Process tanks" },
-          { kind: "pump", part: 3, name: "Pump" },
+          { kind: "htst", part: 1, name: "HTST pasteurisation", steam: true, chill: true, zone: "Pasteurisation" },
+          { kind: "tank", part: 2, name: "Process tanks", count: 3, zone: "Culturing" },
+          { kind: "pump", part: 3, name: "Pump", zone: "Cooling" },
+          { kind: "phe", part: 4, name: "Plate cooler", chill: true },
         ]}
         parts={[
-          { name: "HTST pasteurizer", href: "pasteurisers.html", spec: "50 LPH to 30,000 LPH; plate heat exchanger with SS 304 / SS 316 plates and glue-free NBR / EPDM gaskets" },
-          { name: "Process tanks", href: "tanks.html", spec: "2,000 L to 10,000 L, PUF insulated, SS 304 / SS 316; spray ball for CIP, geared agitator, temperature transmitter, hygienic valves; level transmitter optional" },
-          { ...common.pumps, spec: "SS centrifugal, 500 to 1,00,000 LPH, head up to 60 MWC, open impeller for viscous products" },
+          { name: "HTST pasteurizer", href: "pasteurisers.html", spec: "50 LPH to 30,000 LPH; plate heat exchanger with SS 304 / SS 316 plates and glue-free NBR / EPDM gaskets" },
+          { name: "Process tanks", href: "tanks.html", spec: "2,000 L to 10,000 L, PUF insulated, SS 304 / SS 316; spray ball for CIP, geared agitator, temperature transmitter, hygienic valves; level transmitter optional" },
+          { ...common.pumps, spec: "SS centrifugal, 500 to 1,00,000 LPH, head up to 60 MWC, open impeller for viscous products" },
+          { name: "Plate cooler", href: "plateheat.html", spec: "Plate heat exchanger, SS 304 / SS 316 plates, glue-free NBR / EPDM gaskets; cools stirred curd and yogurt with ice water before filling" },
           { ...common.cip, spec: "Single or multiple circuits, PLC with SCADA" },
         ]}
-        cip={4}
+        cip={5}
         sheetTitle="Curd and yogurt plant"
         facts={[
           ["Pasteurisation", "HTST, 50 to 30,000 LPH"],
@@ -38,12 +39,29 @@ export default function Page() {
           ["Construction", "SS 304 / SS 316"],
           ["Cleaning", "CIP, PLC with SCADA"],
         ]}
+        sections={[
+          {
+            title: "Set or stirred",
+            aside: "Both start from the same pasteurised milk, with the culture added in the process tanks (item 2).",
+            rows: [
+              ["Set curd", "Filled into cups once the culture is added, and sets in the cup."],
+              ["Stirred curd and yogurt", "Sets in the process tanks, is stirred, then cooled through the plate cooler (item 4) and filled."],
+            ],
+          },
+        ]}
         built={[
           { img: photos.htst, name: "HTST pasteurizer", note: "Item 1" },
           { img: photos.tank, name: "Insulated process tank", note: "Item 2" },
           { img: photos.phe, name: "Plate heat exchanger", item: 1, note: <>{"The heart of item 1. "}<a href="plateheat.html">Plate heat exchangers</a></> },
           { img: photos.pumps, name: "SS centrifugal pumps", note: "Item 3" },
-          { img: photos.cip, name: "CIP unit", note: "Item 4" },
+          { img: photos.cip, name: "CIP unit", note: "Item 5" },
+        ]}
+        faq={[
+          ["What capacities do you build?", "Pasteurisation from 50 to 30,000 litres an hour, with process tanks of 2,000 to 10,000 L."],
+          ["Can one plant make both curd and yogurt?", "Yes. Both start from the same pasteurised milk in the process tanks: set curd goes to cups, and stirred curd and yogurt are cooled and then filled."],
+          ["What are the process tanks like?", "PUF insulated, in SS 304 or SS 316, with a geared agitator, temperature transmitter, hygienic valves and a spray ball for CIP. A level transmitter is optional."],
+          ["Manual or automatic?", "The pasteurizer comes in manual or automatic versions, and the CIP runs on PLC with SCADA."],
+          ["What do you need from me for a quote?", "How much milk a day, in litres; your products and packs, curd, yogurt or both; and the site, with its building, space and utilities. We come back with a scheme and a budget."],
         ]}
         close={{
           title: "Planning a curd and yogurt plant?",

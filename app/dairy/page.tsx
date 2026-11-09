@@ -1,81 +1,33 @@
 import { Industry } from "@/components/Industry";
+import s from "@/components/Industry.module.css";
+import { Ref } from "@/components/Ref";
+import { Planner } from "./Planner";
+
+// What a dairy needs to know, with the numbers sourced: FSSAI for the law, e-PG Pathshala and
+// NIFTEM for the process, our brochures for our equipment. Refs are numbered as in `sources`.
+
+const A = ({ href, children }: { href: string; children: string }) => <a href={href}>{children}</a>;
 
 export default function Page() {
   return (
     <Industry
       slug="dairy"
-      title="Dairy Processing Equipment & Plants, Chennai | Tavron Engineers"
-      description="Dairy plants and equipment made in Chennai since 2004: milk, powder, butter, ghee, paneer, cheese, curd and ice cream lines, milk coolers, pasteurizers and CIP."
+      title="Dairy Plants & Equipment: FSSAI Rules, Yields, Sizing | Tavron Engineers"
+      description="Plan a dairy: FSSAI licence tiers and milk grades, pasteurisation rules, paneer, ghee and powder yields, and the plants and equipment we build in Chennai."
       h1="Dairy Processing Equipment & Plants"
-      intro="Equipment and complete plants for every stage of a dairy: milk cooling, storage, pasteurisation, processing into butter, ghee, paneer, cheese, curd and ice cream, and concentration and drying into powder, with CIP and refrigeration. Built by Tavron Engineers in Chennai, India, since 2004."
+      intro="From chilling milk where it's collected to packing milk, curd, paneer, ghee, ice cream and powder. Here are the numbers that shape a dairy: what FSSAI requires, what your milk can yield, and the equipment each step needs."
       specs={[
-        ["Plants", "Liquid milk, milk powder, butter and ghee, paneer, cheese, curd and yogurt, ice cream, flavoured milk, whey, casein"],
-        ["Milk cooling", "Bulk milk coolers, 300 L to 10,000 L"],
-        ["Pasteurisation", "HTST, 50 LPH to 30,000 LPH"],
-        ["Storage", "Tanks from 2,000 L; milk silos up to 1,00,000 L"],
-        ["Powder", "Spray dryers, 5 to 1,500 kg/hr water evaporation"],
-        ["Construction", "SS 304 / SS 316"],
-        ["Cleaning and control", "CIP; PLC, HMI and SCADA"],
+        ["Plants we build", "Liquid milk, milk powder, butter and ghee, paneer, cheese, curd and yogurt, ice cream, flavoured milk, whey, casein"],
+        ["Milk handled", "1,000 to 5,00,000 litres a day"],
+        ["Pasteurisation", "HTST, 50 to 30,000 LPH"],
+        ["Milk cooling", "Bulk milk coolers, 300 to 10,000 L"],
       ]}
-      lineTitle="Dairy equipment, from farm to powder"
-      input="Raw milk in"
-      stages={[
-        {
-          name: "Collect and chill",
-          text: "Milk is cooled at the farm or collection centre and held cold until it's processed or transported.",
-          items: [["bulkCoolers", ["300 L to 10,000 L, direct expansion", "SS 304 / SS 316 inner shell, laser-welded pillow plate", "Conforms to ISO 5708"]]],
-        },
-        {
-          name: "Store and move",
-          text: "Insulated tanks and silos keep milk at temperature, and sanitary pumps move it between stages.",
-          items: [
-            ["tanks", ["Storage tanks from 2,000 L", "Milk silos up to 1,00,000 L", "Road milk tankers, 5,000 to 20,000 L"]],
-            ["pumps", ["500 LPH to 1,00,000 LPH", "Head up to 60 MWC", "SMS / DIN fittings"]],
-          ],
-        },
-        {
-          name: "Heat treat",
-          text: "HTST pasteurisation makes milk safe, recovering heat from the milk on its way out.",
-          items: [
-            ["pasteurisers", ["50 LPH to 30,000 LPH", "Full heat regeneration", "Skid-mounted, manual or automatic"]],
-            ["plateheat", ["Gasketed and semi-welded", "Heating, cooling and pasteurising, 50 to 30,000 LPH", "Glue-free NBR / EPDM gaskets"]],
-          ],
-        },
-        {
-          name: "Concentrate and dry",
-          text: "Evaporators take water out, and spray dryers turn the concentrate into milk or whey powder.",
-          items: [
-            ["evaporators", ["Falling film, rising film or forced circulation", "Single or multiple effect", "TVR; MVR optional"]],
-            ["spray", ["Milk and whey powder", "5 to 1,500 kg/hr water evaporation", "Vibro and static fluid bed finishing"]],
-          ],
-        },
-      ]}
-      output={{
-        name: "Out: complete plants for each product",
-        items: [
-          ["Liquid milk", "milkprocessing.html"],
-          ["Milk powder", "milkpowder.html"],
-          ["Butter and ghee", "ButterProcessing.html"],
-          ["Ghee", "gheeprocessing.html"],
-          ["Paneer", "PaneerProcessing.html"],
-          ["Cheese", "CheeseProcessing.html"],
-          ["Curd and yogurt", "CurdYogurtProcessing.html"],
-          ["Ice cream", "IcecreamProcessing.html"],
-          ["Flavoured milk", "FlavouredMilkProcessing.html"],
-          ["Whey", "whey.html"],
-          ["Casein", "Casine.html"],
-        ],
-      }}
-      around={[
-        ["refrigeration", ["Ammonia ice banks for 10,000 to 5,00,000 LPD of milk", "Freon ice banks for 1,000 to 20,000 LPD", "Falling film chillers and glycol systems"]],
-        ["cip", ["One to four or more tanks", "Single or multiple circuits", "PLC with HMI; SCADA optional"]],
-        ["automation", ["PLC and MCC panels", "HMI and SCADA: Siemens, Allen-Bradley, Delta", "Retrofits of legacy controls"]],
-      ]}
-      whyTitle="Why dairies work with Tavron"
-      why={[
-        "Every stage of a dairy from one manufacturer, from farm milk cooling to powder",
-        "Pasteurisation from 50 LPH to 30,000 LPH, so a line can be sized for a small dairy or a large one",
-        "Refrigeration sized to the milk you handle: ice banks for 1,000 to 5,00,000 LPD",
+      sources={[
+        ["FSSAI: Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, sub-regulation 2.1, Dairy products and analogues", "https://www.fssai.gov.in/upload/uploadfiles/files/2_%20Chapter%202_1%20(Dairy%20products%20and%20analogues).pdf"],
+        ["FSSAI: eligibility for state and central licences (2019)", "https://fssai.gov.in/upload/media/FSSAI_News_License_IndianTalk_07_05_2019.pdf"],
+        ["e-PG Pathshala (UGC, INFLIBNET): Technology of Milk and Milk Products, module 19, Technology of Paneer", "https://epgp.inflibnet.ac.in/epgpdata/uploads/epgp_content/Food_Technology/Technology_of_Milk_and_Milk_Products/19.Technology_of_Paneer/et/2924_et_m19.pdf"],
+        ["e-PG Pathshala (UGC, INFLIBNET): Technology of Milk and Milk Products, module 10, Technology of Ghee Making", "https://epgp.inflibnet.ac.in/epgpdata/uploads/epgp_content/S000015FT/P000357/M002915/ET/1455793655ET10.pdf"],
+        ["NIFTEM, PM FME scheme: Paneer Processing", "https://niftem.ac.in/newsite/pmfme/wp-content/uploads/2022/07/ppt_Paneer-Processing.pdf"],
       ]}
       clients={{
         title: "Dairy brands we work with",
@@ -91,12 +43,15 @@ export default function Page() {
         ],
       }}
       faq={[
-        ["What dairy plants does Tavron build?", "Liquid milk processing, milk powder, butter and ghee, paneer, cheese, curd and yogurt, ice cream, flavoured milk, whey and casein plants, designed, built, installed and commissioned by Tavron."],
-        ["Can I buy a single machine instead of a complete plant?", "Yes. Bulk milk coolers, pasteurizers, plate heat exchangers, tanks, pumps, CIP systems and refrigeration are supplied on their own, or as part of a complete plant."],
-        ["What capacities do you cover?", "Pasteurizers from 50 to 30,000 LPH, bulk milk coolers from 300 to 10,000 L, milk silos up to 1,00,000 L and spray dryers from 5 to 1,500 kg/hr water evaporation."],
-        ["Where do you install?", "Tavron manufactures in Chennai and has completed turnkey projects for food processing industries across India."],
+        ["Which FSSAI licence does a dairy need?", "It depends on the milk handled a day. Up to 500 litres a day, registration; from 501 to 50,000 litres a day (or 2.5 to 2,500 MT of milk solids a year), a state licence; above 50,000 litres a day, a central licence. Check the current rules on FSSAI's FoSCoS portal before you apply."],
+        ["What temperature must milk be pasteurised at?", "Under FSSAI, every particle of milk heated to at least 72 °C and held for 15 seconds, or 63 °C for 30 minutes, or a combination that gives a negative phosphatase test, then cooled immediately to 4 °C or below. Our HTST pasteurizers hold at least 74 °C for 20 seconds."],
+        ["What fat and SNF must toned and double toned milk have?", "Toned milk: at least 3.0% fat and 8.5% SNF. Double toned milk: at least 1.3% fat and 9.0% SNF; the fat minimum was 1.5% until it was lowered on 1 August 2023."],
+        ["How much paneer does milk give?", "Roughly 15 to 22 kg from 100 kg of milk, more from buffalo milk than cow milk, depending on the fat and the paneer's moisture. Paneer must stay within 60% moisture, with at least 50% fat on a dry basis."],
+        ["How much ghee does butter or cream give?", "The creamery-butter method recovers about 92% of the milk fat as ghee, the direct-cream method about 88%, and the traditional desi method about 78%."],
+        ["Should the ice bank be Freon or ammonia?", "Freon suits 1,000 to 20,000 litres of milk a day; ammonia 10,000 to 5,00,000 litres a day, and more on request. Between 10,000 and 20,000 litres a day, either can work."],
+        ["Can I buy one machine instead of a complete plant?", "Yes. Bulk milk coolers, pasteurizers, plate heat exchangers, tanks, pumps, CIP systems and refrigeration are supplied on their own, or as part of a complete plant."],
       ]}
-      ask={{ title: "Planning a dairy plant?", text: "Send your capacity and product mix. We'll come back with a scheme and a budget." }}
+      ask={{ title: "Planning a dairy plant?", text: "Send your litres a day and product mix. We'll come back with a scheme and a budget." }}
       brochures={[
         ["Milk plant", "downloads/Milk%20Plant.pdf", "1.8 MB"],
         ["Milk powder plant", "downloads/Milk%20Powder%20Plant.pdf", "787 KB"],
@@ -108,6 +63,100 @@ export default function Page() {
         ["Bulk milk cooler", "downloads/Bulk%20Milk%20Cooler.pdf", "611 KB"],
       ]}
       wa="to discuss a dairy project"
-    />
+    >
+      <Planner />
+
+      <section className={s.section} aria-labelledby="grades">
+        <div className={`${s.wrap} ${s.split}`}>
+          <div>
+            <h2 className={s.h2} id="grades">Milk you can sell</h2>
+            <p className={s.note}>
+              The minimum fat and solids-not-fat (SNF) FSSAI sets for each grade.<Ref n={1} /> A <A href="milkprocessing.html">liquid milk plant</A> sets
+              each grade with its cream separator.
+            </p>
+          </div>
+          <table className={s.table}>
+            <thead>
+              <tr><th scope="col">Milk</th><th scope="col">Fat, minimum</th><th scope="col">SNF, minimum</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Full cream</th><td>6.0%</td><td>9.0%</td></tr>
+              <tr><th scope="row">Standardised</th><td>4.5%</td><td>8.5%</td></tr>
+              <tr><th scope="row">Toned</th><td>3.0%</td><td>8.5%</td></tr>
+              <tr><th scope="row">Double toned</th><td>1.3%, down from 1.5% since 1 August 2023</td><td>9.0%</td></tr>
+              <tr><th scope="row">Skimmed</th><td>0.5% at most</td><td>8.7%</td></tr>
+              <tr className={s.group}><th scope="rowgroup" colSpan={3}>Milk as it comes from the animal</th></tr>
+              <tr><th scope="row">Buffalo</th><td>5.0%</td><td>9.0%</td></tr>
+              <tr><th scope="row">Cow</th><td>3.2%</td><td>8.3%</td></tr>
+              <tr><th scope="row">Mixed</th><td>4.5%</td><td>8.5%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className={s.section} aria-labelledby="heat">
+        <div className={`${s.wrap} ${s.split}`}>
+          <div>
+            <h2 className={s.h2} id="heat">The temperatures that matter</h2>
+            <p className={s.note}>What the law sets for milk, and what good practice uses for paneer and ghee.</p>
+          </div>
+          <table className={s.table}>
+            <thead>
+              <tr><th scope="col">Step</th><th scope="col">Temperature and time</th><th scope="col">Equipment</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Pasteurising milk</th><td>At least 72 °C for 15 seconds, or 63 °C for 30 minutes<Ref n={1} /></td><td><A href="pasteurisers.html">HTST pasteurizers</A>, holding at least 74 °C for 20 seconds</td></tr>
+              <tr><th scope="row">After pasteurising</th><td>Cooled at once to 4 °C or below<Ref n={1} /></td><td><A href="RefrigerationEquipments.html">Ice banks</A></td></tr>
+              <tr><th scope="row">Paneer: heating the milk</th><td>85 to 90 °C, held 5 minutes<Ref n={5} /></td><td><A href="PaneerProcessing.html">Milk heating skid</A></td></tr>
+              <tr><th scope="row">Paneer: coagulating</th><td>About 70 °C, with a 1% citric acid solution at the same temperature<Ref n={5} /></td><td><A href="PaneerProcessing.html">Coagulation tanks</A></td></tr>
+              <tr><th scope="row">Paneer: storing</th><td>5 to 8 °C, vacuum packed<Ref n={5} /></td><td><A href="PaneerProcessing.html">Cold store</A></td></tr>
+              <tr><th scope="row">Ghee: settling melted butter</th><td>About 80 °C for several hours, which drains about 74% of the butter&apos;s water before boiling<Ref n={4} /></td><td><A href="ButterProcessing.html">Melting vat and settling tank</A></td></tr>
+              <tr><th scope="row">Ghee: clarifying</th><td>110 to 120 °C; 120 to 140 °C in south India<Ref n={4} /></td><td><A href="gheeprocessing.html">Ghee boilers</A></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className={s.section} aria-labelledby="products">
+        <div className={`${s.wrap} ${s.split}`}>
+          <div>
+            <h2 className={s.h2} id="products">What the products must meet</h2>
+            <p className={s.note}>FSSAI&apos;s composition standards<Ref n={1} />, which the plant has to make every batch to.</p>
+          </div>
+          <table className={s.table}>
+            <thead>
+              <tr><th scope="col">Product</th><th scope="col">FSSAI standard</th><th scope="col">Plant</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Paneer</th><td>Moisture 60% at most; milk fat at least 50% of the dry matter</td><td><A href="PaneerProcessing.html">Paneer</A></td></tr>
+              <tr><th scope="row">Ghee</th><td>Milk fat at least 99.5%; moisture 0.5% at most</td><td><A href="gheeprocessing.html">Ghee</A></td></tr>
+              <tr><th scope="row">Table butter</th><td>Milk fat at least 80%; moisture 16% at most</td><td><A href="ButterProcessing.html">Butter and ghee</A></td></tr>
+              <tr><th scope="row">Skimmed milk powder</th><td>Moisture 5% at most; milk fat 1.5% at most</td><td><A href="milkpowder.html">Milk powder</A></td></tr>
+              <tr><th scope="row">Ice cream</th><td>Milk fat at least 10%; total solids at least 36%; milk protein at least 3.5%; at least 525 g a litre</td><td><A href="IcecreamProcessing.html">Ice cream</A></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className={s.section} aria-labelledby="start">
+        <div className={`${s.wrap} ${s.split}`}>
+          <div>
+            <h2 className={s.h2} id="start">Where to start</h2>
+            <p className={s.note}>From where your dairy is today to the plant or machine that fits.</p>
+          </div>
+          <table className={s.table}>
+            <tbody>
+              <tr><th scope="row">You collect milk from farmers</th><td><A href="bulkCoolers.html">Bulk milk coolers</A>, 300 to 10,000 L, to chill milk where it&apos;s collected</td></tr>
+              <tr><th scope="row">You&apos;re starting a dairy</th><td>A <A href="milkprocessing.html">liquid milk plant</A>, from reception to pouch packing</td></tr>
+              <tr><th scope="row">You want more from the same milk</th><td><A href="CurdYogurtProcessing.html">Curd and yogurt</A>, <A href="PaneerProcessing.html">paneer</A>, <A href="ButterProcessing.html">butter and ghee</A>, <A href="IcecreamProcessing.html">ice cream</A>, <A href="FlavouredMilkProcessing.html">flavoured milk</A>, <A href="CheeseProcessing.html">cheese</A></td></tr>
+              <tr><th scope="row">You have surplus milk</th><td>A <A href="milkpowder.html">milk powder plant</A></td></tr>
+              <tr><th scope="row">You have whey or skim milk to use</th><td><A href="whey.html">Whey processing</A> and <A href="Casine.html">casein</A> plants</td></tr>
+              <tr><th scope="row">Your plant needs an upgrade</th><td><A href="automation.html">Automation</A>, <A href="cipsystem.html">CIP</A> and <A href="RefrigerationEquipments.html">refrigeration</A>; we start by studying where the line loses time, yield or heat</td></tr>
+              <tr><th scope="row">You need one machine</th><td><A href="tanks.html">Tanks and silos</A>, <A href="pumps.html">pumps</A>, <A href="pasteurisers.html">pasteurizers</A>, <A href="plateheat.html">plate heat exchangers</A>, <A href="evaporators.html">evaporators</A>, <A href="spray.html">spray dryers</A></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </Industry>
   );
 }

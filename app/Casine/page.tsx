@@ -15,19 +15,28 @@ export default function Page() {
       <Plant
         crumb="Casein"
         title="Casein plants"
-        intro="Wet casein lines for 5,000 to 50,000 LPH of skim milk: inline heating and chemical dosing for coagulation, decanters and ring dryers, with whey filtration, built by Tavron Engineers, Chennai."
-        product="Skim milk and casein"
+        intro="Wet casein lines for 5,000 to 50,000 LPH of skim milk: inline heating and chemical dosing for coagulation, decanters and ring dryers, with whey filtration, evaporation and spray drying."
+        product="Skim milk, casein and whey"
         input="Skim milk in"
         output="Casein out"
         stations={[
-          { kind: "tubular", part: 1, name: "Heating and\ndosing", steam: true },
-          { kind: "decanter", part: 2, name: "Decanters" },
-          { kind: "ringdryer", part: 3, name: "Ring dryer" },
+          { kind: "tubular", part: 1, name: "Heating and\ndosing", steam: true, zone: "Coagulation" },
+          { kind: "decanter", part: 2, name: "Decanters", zone: "Separation" },
+          { kind: "ringdryer", part: 3, name: "Ring dryer", zone: "Drying" },
         ]}
+        then={{
+          from: 2,
+          output: "Whey powder out",
+          stations: [
+            { kind: "membrane", part: 4, name: "Whey\nfiltration", zone: "Whey" },
+            { kind: "evaporator", part: 5, name: "Falling film\nevaporator", steam: true },
+            { kind: "dryer", part: 6, name: "Spray dryer" },
+          ],
+        }}
         parts={[
-          { name: "Inline heating and dosing", spec: "Inline heating and chemical dosing for coagulation; 5,000 to 50,000 LPH of skim milk" },
+          { name: "Inline heating and dosing", spec: "Inline heating and chemical dosing for coagulation; 5,000 to 50,000 LPH of skim milk" },
           { name: "Decanters", spec: "Separate the coagulated casein from the whey" },
-          { name: "Ring dryer", spec: "From 150 kg/hr water evaporation; balanced disintegrator for smooth running; manifold for recycling; SS 304 / SS 316" },
+          { name: "Ring dryer", spec: "From 150 kg/hr water evaporation; balanced disintegrator for smooth running; manifold for recycling; SS 304 / SS 316" },
           { name: "Whey filtration", href: "whey.html", spec: "Micro, nano, ultra and reverse osmosis" },
           { name: "Falling film evaporator", href: "evaporators.html", spec: "Single or multiple effect" },
           common.spray,
@@ -61,6 +70,14 @@ export default function Page() {
           { img: [`${dir}Whey-Filtration-System.jpg`, 750, 517, "Whey filtration system"], name: "Whey filtration", note: "Item 4" },
           { img: ["assets/img/projects/whey/falling-film-evaporator.jpg", 704, 355, "Falling film evaporator"], name: "Falling film evaporator", note: "Item 5" },
           { img: photos.spray, name: "Spray dryer", note: "Item 6" },
+        ]}
+        faq={[
+          ["What capacity do you build?", "Wet casein lines from 5,000 to 50,000 litres an hour of skim milk."],
+          ["How is the milk coagulated?", "Inline: the skim milk is heated and dosed with chemicals as it flows."],
+          ["How is the casein dried?", "In a ring dryer from 150 kg/hr water evaporation, with a balanced disintegrator for smooth running and a manifold for recycling."],
+          ["What happens to the whey?", "It goes on to membrane filtration (micro, nano, ultra or RO), a falling film evaporator and a spray dryer from 5 to 1,500 kg/hr water evaporation."],
+          ["Is the line cleaned in place?", "Yes. The whole line is CIP cleanable."],
+          ["What do you need from me for a quote?", "How much skim milk a day, in litres; what you'd like to do with the whey; and the site, with its building, space and utilities. We come back with a scheme and a budget."],
         ]}
         close={{
           title: "Planning a casein plant?",

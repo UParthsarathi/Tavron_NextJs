@@ -14,19 +14,20 @@ export default function Page() {
       <Plant
         crumb="Whey"
         title="Whey processing plants"
-        intro="From whey to powder: insulated collection tanks, membrane filtration, falling film evaporation and spray drying, for DM whey powder, whey protein concentrate and lactose, built by Tavron Engineers, Chennai."
+        intro="From whey to powder: insulated collection tanks, membrane filtration, falling film evaporation and spray drying, for DM whey powder, whey protein concentrate and lactose."
         product="Whey"
         input="Whey in"
         output="Powder out"
         stations={[
-          { kind: "tank", part: 1, name: "Whey collection" },
-          { kind: "membrane", part: 2, name: "Membrane\nfiltration" },
+          { kind: "tank", part: 1, name: "Whey collection", count: 2, zone: "Collection" },
           { kind: "pump", part: 3, name: "Pump" },
-          { kind: "evaporator", part: 4, name: "Falling film\nevaporator", steam: true },
-          { kind: "dryer", part: 5, name: "Spray dryer" },
+          { kind: "membrane", part: 2, name: "Membrane\nfiltration", out: "Permeate", zone: "Filtration" },
+          { kind: "pump", part: 3, name: "Pump" },
+          { kind: "evaporator", part: 4, name: "Falling film\nevaporator", steam: true, zone: "Evaporation" },
+          { kind: "dryer", part: 5, name: "Spray dryer", zone: "Drying" },
         ]}
         parts={[
-          { name: "Whey collection tank", href: "tanks.html", spec: "SS 304 / SS 316, PUF insulated; spray ball for CIP; 2,000, 3,000, 5,000 and 10,000 L" },
+          { name: "Whey collection tank", href: "tanks.html", spec: "SS 304 / SS 316, PUF insulated; spray ball for CIP; 2,000, 3,000, 5,000 and 10,000 L" },
           { name: "Membrane filtration", spec: "Micro, nano, ultra and reverse osmosis" },
           common.pumps,
           { name: "Falling film evaporator", href: "evaporators.html", spec: "Single or multiple effect" },
@@ -47,6 +48,14 @@ export default function Page() {
           { img: ["assets/img/projects/whey/falling-film-evaporator.jpg", 704, 355, "Falling film evaporator"], name: "Falling film evaporator", note: "Item 4" },
           { img: photos.spray, name: "Spray dryer", note: "Item 5" },
           { img: photos.pumps, name: "SS centrifugal pumps", note: "Item 3" },
+        ]}
+        faq={[
+          ["What can a whey plant make?", "DM whey powder, whey protein concentrate (WPC) or lactose."],
+          ["Which membranes do you use?", "Micro, nano, ultra and reverse osmosis filtration, chosen for the product."],
+          ["What sizes are the whey tanks?", "2,000, 3,000, 5,000 and 10,000 L, in SS 304 / SS 316, PUF insulated, with a spray ball for CIP."],
+          ["What spray dryer capacity?", "From 5 to 1,500 kg/hr water evaporation."],
+          ["Can it take whey from a cheese, paneer or casein plant?", "Yes. We build cheese, paneer and casein plants, and the whey from them can feed this line."],
+          ["What do you need from me for a quote?", "How much whey a day, in litres; what you want from it, powder, WPC or lactose; and the site, with its building, space and utilities. We come back with a scheme and a budget."],
         ]}
         close={{
           title: "Planning a whey plant?",

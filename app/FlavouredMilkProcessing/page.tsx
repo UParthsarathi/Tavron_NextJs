@@ -16,25 +16,28 @@ export default function Page() {
       <Plant
         crumb="Flavoured milk"
         title="Flavoured milk plants"
-        intro="From 500 litres a day to the capacity you need: batch or HTST processing, with retort sterilisation for glass or PET bottles or aseptic packing for long shelf life, built by Tavron Engineers, Chennai."
+        intro="From 500 litres a day to the capacity you need: batch or HTST processing, with retort sterilisation for glass or PET bottles or aseptic packing for long shelf life."
         product="Milk"
         input="Milk in"
-        output="Shelf-stable bottles out"
+        output="Bottles to the store"
         stations={[
-          { kind: "vat", part: 1, name: "Multi-purpose vat" },
-          { kind: "phe", part: 2, name: "Plate heat\nexchanger" },
-          { kind: "pump", part: 3, name: "Pump" },
-          { kind: "sterilizer", part: 4, name: "Bottle sterilizer", steam: true },
+          { kind: "tank", part: 1, name: "Mixing tank", zone: "Mixing" },
+          { kind: "pump", part: 2, name: "Pump" },
+          { kind: "htst", part: 3, name: "HTST pasteurisation", steam: true, chill: true, zone: "Pasteurisation" },
+          { kind: "filler", part: 4, name: "Bottle filling", count: 3, zone: "Filling" },
+          { kind: "sterilizer", part: 5, name: "Bottle sterilizer", steam: true, zone: "Retort" },
         ]}
         parts={[
-          { name: "Multi-purpose vat", href: "KhovaProcessing.html", spec: "LPG or diesel fired, from 60 L; for milk and food heating" },
-          { name: "Plate heat exchanger", href: "plateheat.html", spec: "SS 304 / SS 316 plates, glue-free NBR / EPDM gaskets" },
+          { name: "Mixing tank", href: "tanks.html", spec: "SS 304 / SS 316, PUF insulated, with geared agitator; 2,000 to 10,000 L" },
           common.pumps,
+          { name: "HTST pasteurizer", href: "pasteurisers.html", spec: "50 LPH to 30,000 LPH; plate heat exchanger with SS 304 / SS 316 plates and glue-free NBR / EPDM gaskets; manual or automatic" },
+          { name: "Bottle filling", spec: "Glass or PET bottles, integrated with the line" },
           { name: "Bottle sterilizer", href: "bsterilizer.html", spec: "600 to 3,000 bottles a batch; pressurised hot water; PLC control" },
+          { name: "Multi-purpose vat", href: "KhovaProcessing.html", spec: "For small plants, in place of items 1 and 3: LPG or diesel fired, from 60 L" },
           { ...common.cip, spec: "Single or multiple circuits, PLC with SCADA" },
           { name: "Controls", href: "automation.html", spec: "PLC and HMI panel; flow-meter control of water recirculation; PID steam control valves" },
         ]}
-        cip={5}
+        cip={7}
         sheetTitle="Flavoured milk plant"
         facts={[
           ["Capacity", "From 500 L a day"],
@@ -60,13 +63,21 @@ export default function Page() {
           },
         ]}
         built={[
-          { img: [`${dir}Multi%20Purpose%20Vat.jpg`, 367, 680, "Fired multi-purpose vat"], name: "Multi-purpose vat", note: "Item 1" },
-          { img: [`${dir}flamilkpro3b.jpg`, 700, 773, "Plate heat exchanger in a flavoured milk plant"], name: "Plate heat exchanger", note: "Item 2" },
-          { img: [`${dir}sterlizer.png`, 301, 327, "Bottle sterilizer"], name: "Bottle sterilizer", note: "Item 4" },
-          { img: [`${dir}Delta%20HMI%20Screen.jpg`, 368, 406, "PLC and HMI control panel screen"], name: "Controls", note: "Item 6" },
-          { img: [`${dir}flamilkpro2b.jpg`, 700, 394, "CIP system in a flavoured milk plant"], name: "CIP unit", note: "Item 5" },
-          { img: [`${dir}flamilkpro5b.jpg`, 700, 525, "HTST pasteurizer skid in a flavoured milk plant"], name: "HTST pasteurizer", note: "For HTST lines" },
-          { img: photos.pumps, name: "SS centrifugal pumps", note: "Item 3" },
+          { img: [`${dir}Multi%20Purpose%20Vat.jpg`, 367, 680, "Fired multi-purpose vat"], name: "Multi-purpose vat", note: "Item 6, for small plants" },
+          { img: [`${dir}flamilkpro3b.jpg`, 700, 773, "Plate heat exchanger in a flavoured milk plant"], name: "Plate heat exchanger", note: "Inside item 3" },
+          { img: [`${dir}sterlizer.png`, 301, 327, "Bottle sterilizer"], name: "Bottle sterilizer", note: "Item 5" },
+          { img: [`${dir}Delta%20HMI%20Screen.jpg`, 368, 406, "PLC and HMI control panel screen"], name: "Controls", note: "Item 8" },
+          { img: [`${dir}flamilkpro2b.jpg`, 700, 394, "CIP system in a flavoured milk plant"], name: "CIP unit", note: "Item 7" },
+          { img: [`${dir}flamilkpro5b.jpg`, 700, 525, "HTST pasteurizer skid in a flavoured milk plant"], name: "HTST pasteurizer", note: "Item 3" },
+          { img: photos.pumps, name: "SS centrifugal pumps", note: "Item 2" },
+        ]}
+        faq={[
+          ["What's the smallest flavoured milk plant you build?", "From 500 litres a day, up to the capacity you need."],
+          ["Batch or HTST?", "Small plants heat the milk in a multi-purpose vat, fired by LPG or diesel; larger ones use an HTST pasteurizer from 50 to 30,000 litres an hour."],
+          ["Retort or aseptic?", "Retort sterilises filled glass or PET bottles in a steam and water spray sterilizer, 600 to 3,000 bottles a batch. Aseptic processing suits long shelf-life packs."],
+          ["How is the sterilizer controlled?", "PLC and HMI, with flow-meter control of the water recirculation and PID steam control valves."],
+          ["What is the plant made of?", "SS 304 and SS 316, to a hygienic design, and CIP cleanable."],
+          ["What do you need from me for a quote?", "How much milk a day, in litres; your packs, glass or PET bottles, or aseptic; and the site, with its building, space and utilities. We come back with a scheme and a budget."],
         ]}
         close={{
           title: "Planning a flavoured milk plant?",

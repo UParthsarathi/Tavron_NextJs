@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { equipment, industries, type Photo } from "./catalog";
 import { Faq, type Link } from "./Doc";
 import { Site } from "./Site";
@@ -28,6 +29,21 @@ type Props = {
   intro: string;
   /** key facts, set out like a drawing's title block */
   specs: [string, string][];
+  /** [logo file in assets/img/clients, client name] */
+  clients?: { title: string; logos: [string, string][] };
+  faq: [string, string][];
+  ask: { title: string; text: string };
+  brochures: Link[];
+  /** ends the WhatsApp message "Hi Tavron, I'd like …." */
+  wa: string;
+} & (Line | Knowledge);
+
+/** what the industry needs to know, in place of the process line (see app/dairy/page.tsx);
+ *  `sources` are [title, url], cited in the content as Ref n */
+type Knowledge = { children: ReactNode; sources: [string, string][] };
+
+/** the industry as a process line of our equipment */
+type Line = {
   /** heading over the process line */
   lineTitle: string;
   /** what goes into the line, e.g. "Raw milk in" */
@@ -40,13 +56,6 @@ type Props = {
   output: { name: string; items?: Link[] };
   whyTitle: string;
   why: string[];
-  /** [logo file in assets/img/clients, client name] */
-  clients?: { title: string; logos: [string, string][] };
-  faq: [string, string][];
-  ask: { title: string; text: string };
-  brochures: Link[];
-  /** ends the WhatsApp message "Hi Tavron, I'd like …." */
-  wa: string;
 };
 
 const newTab = (href: string) => (href.endsWith(".pdf") ? { target: "_blank", rel: "noopener" } : {});
@@ -101,6 +110,7 @@ export function Industry(p: Props) {
           </div>
         </header>
 
+        {"children" in p ? p.children : <>
         <section className={s.route} aria-labelledby="line">
           <div className={s.wrap}>
             <h2 className={s.routeTitle} id="line">{p.lineTitle}</h2>
@@ -143,6 +153,7 @@ export function Industry(p: Props) {
             <ul className={s.why}>{[...p.why, ...company].map((w) => <li key={w}>{w}</li>)}</ul>
           </div>
         </section>
+        </>}
 
         {p.clients && (
           <section className={s.section}>
@@ -161,6 +172,22 @@ export function Industry(p: Props) {
             <Faq items={p.faq} />
           </div>
         </section>
+
+        {"sources" in p && (
+          <section className={s.section} aria-labelledby="sources">
+            <div className={`${s.wrap} ${s.split}`}>
+              <div>
+                <h2 className={s.h2} id="sources">Sources</h2>
+                <p className={s.note}>Regulations change; check the current text before you apply for a licence. Equipment ranges are from our own brochures.</p>
+              </div>
+              <ol className={s.sources}>
+                {p.sources.map(([title, url], i) => (
+                  <li key={url} id={`source-${i + 1}`}><a href={url} target="_blank" rel="noopener">{title}</a></li>
+                ))}
+              </ol>
+            </div>
+          </section>
+        )}
 
         <section className={s.ask}>
           <div className={`${s.wrap} ${s.askGrid}`}>
