@@ -24,7 +24,7 @@ export default function Page() {
       ]}
       sources={[
         ["FSSAI: Food Safety and Standards (Food Products Standards and Food Additives) Regulations, 2011, sub-regulation 2.1, Dairy products and analogues", "https://www.fssai.gov.in/upload/uploadfiles/files/2_%20Chapter%202_1%20(Dairy%20products%20and%20analogues).pdf"],
-        ["FSSAI: eligibility for state and central licences (2019)", "https://fssai.gov.in/upload/media/FSSAI_News_License_IndianTalk_07_05_2019.pdf"],
+        ["FSSAI: eligibility for registration, state and central licences, by kind of business", "https://fssai.gov.in/upload/uploadfiles/files/Eligibility_Kind_Business_04_05_2020.pdf"],
         ["e-PG Pathshala (UGC, INFLIBNET): Technology of Milk and Milk Products, module 19, Technology of Paneer", "https://epgp.inflibnet.ac.in/epgpdata/uploads/epgp_content/Food_Technology/Technology_of_Milk_and_Milk_Products/19.Technology_of_Paneer/et/2924_et_m19.pdf"],
         ["e-PG Pathshala (UGC, INFLIBNET): Technology of Milk and Milk Products, module 10, Technology of Ghee Making", "https://epgp.inflibnet.ac.in/epgpdata/uploads/epgp_content/S000015FT/P000357/M002915/ET/1455793655ET10.pdf"],
         ["NIFTEM, PM FME scheme: Paneer Processing", "https://niftem.ac.in/newsite/pmfme/wp-content/uploads/2022/07/ppt_Paneer-Processing.pdf"],
@@ -43,15 +43,14 @@ export default function Page() {
         ],
       }}
       faq={[
-        ["Which FSSAI licence does a dairy need?", "It depends on the milk handled a day. Up to 500 litres a day, registration; from 501 to 50,000 litres a day (or 2.5 to 2,500 MT of milk solids a year), a state licence; above 50,000 litres a day, a central licence. Check the current rules on FSSAI's FoSCoS portal before you apply."],
+        ["Which FSSAI licence does a dairy need?", "It depends on the milk handled a day. Up to 500 litres a day, registration; from 501 to 50,000 litres a day, a state licence; above 50,000 litres a day (or 2,500 MT of milk solids a year), a central licence. FSSAI's FoSCoS portal lists the fees and the current rules; check there before you apply."],
         ["What temperature must milk be pasteurised at?", "Under FSSAI, every particle of milk heated to at least 72 °C and held for 15 seconds, or 63 °C for 30 minutes, or a combination that gives a negative phosphatase test, then cooled immediately to 4 °C or below. Our HTST pasteurizers hold at least 74 °C for 20 seconds."],
-        ["What fat and SNF must toned and double toned milk have?", "Toned milk: at least 3.0% fat and 8.5% SNF. Double toned milk: at least 1.3% fat and 9.0% SNF; the fat minimum was 1.5% until it was lowered on 1 August 2023."],
+        ["What fat and SNF must toned and double toned milk have?", "Toned milk: at least 3.0% fat and 8.5% SNF. Double toned milk: at least 1.3% fat and 9.0% SNF."],
         ["How much paneer does milk give?", "Roughly 15 to 22 kg from 100 kg of milk, more from buffalo milk than cow milk, depending on the fat and the paneer's moisture. Paneer must stay within 60% moisture, with at least 50% fat on a dry basis."],
         ["How much ghee does butter or cream give?", "The creamery-butter method recovers about 92% of the milk fat as ghee, the direct-cream method about 88%, and the traditional desi method about 78%."],
         ["Should the ice bank be Freon or ammonia?", "Freon suits 1,000 to 20,000 litres of milk a day; ammonia 10,000 to 5,00,000 litres a day, and more on request. Between 10,000 and 20,000 litres a day, either can work."],
         ["Can I buy one machine instead of a complete plant?", "Yes. Bulk milk coolers, pasteurizers, plate heat exchangers, tanks, pumps, CIP systems and refrigeration are supplied on their own, or as part of a complete plant."],
       ]}
-      ask={{ title: "Planning a dairy plant?", text: "Send your litres a day and product mix. We'll come back with a scheme and a budget." }}
       brochures={[
         ["Milk plant", "downloads/Milk%20Plant.pdf", "1.8 MB"],
         ["Milk powder plant", "downloads/Milk%20Powder%20Plant.pdf", "787 KB"],
@@ -83,7 +82,7 @@ export default function Page() {
               <tr><th scope="row">Full cream</th><td>6.0%</td><td>9.0%</td></tr>
               <tr><th scope="row">Standardised</th><td>4.5%</td><td>8.5%</td></tr>
               <tr><th scope="row">Toned</th><td>3.0%</td><td>8.5%</td></tr>
-              <tr><th scope="row">Double toned</th><td>1.3%, down from 1.5% since 1 August 2023</td><td>9.0%</td></tr>
+              <tr><th scope="row">Double toned</th><td>1.3%</td><td>9.0%</td></tr>
               <tr><th scope="row">Skimmed</th><td>0.5% at most</td><td>8.7%</td></tr>
               <tr className={s.group}><th scope="rowgroup" colSpan={3}>Milk as it comes from the animal</th></tr>
               <tr><th scope="row">Buffalo</th><td>5.0%</td><td>9.0%</td></tr>

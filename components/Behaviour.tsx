@@ -21,8 +21,19 @@ export function Behaviour() {
     initHeader();
     initMobileNav();
     initContactForm();
+    initHashLinks();
   }, []);
   return null;
+}
+
+// <base href="/"> resolves "#source-1" to "/#source-1", the home page. Keep same-page links on the page.
+function initHashLinks() {
+  document.addEventListener("click", (e) => {
+    const href = (e.target as Element).closest("a")?.getAttribute("href");
+    if (!href?.startsWith("#") || href === "#") return;
+    e.preventDefault();
+    location.hash = href;
+  });
 }
 
 // ---------------------------------------------------------------- jQuery's show/hide animations

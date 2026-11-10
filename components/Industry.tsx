@@ -32,7 +32,6 @@ type Props = {
   /** [logo file in assets/img/clients, client name] */
   clients?: { title: string; logos: [string, string][] };
   faq: [string, string][];
-  ask: { title: string; text: string };
   brochures: Link[];
   /** ends the WhatsApp message "Hi Tavron, I'd like …." */
   wa: string;
@@ -96,7 +95,6 @@ export function Industry(p: Props) {
                 <p className={s.intro}>{p.intro}</p>
                 <div className={s.actions}>
                   <a href="contact.html" className="tv-btn tv-btn--primary">Request a quotation</a>
-                  <a href="tel:+919176610713" className={s.phone}>+91 91766 10713</a>
                 </div>
               </div>
               {/* the photo through a tank's sight glass */}
@@ -188,19 +186,6 @@ export function Industry(p: Props) {
             </div>
           </section>
         )}
-
-        <section className={s.ask}>
-          <div className={`${s.wrap} ${s.askGrid}`}>
-            <div>
-              <h2 className={s.h2}>{p.ask.title}</h2>
-              <p className={s.askText}>{p.ask.text}</p>
-            </div>
-            <div className={s.askActions}>
-              <a href="contact.html" className="tv-btn tv-btn--primary">Request a quotation</a>
-              <a href="tel:+919176610713" className="tv-btn tv-btn--on-dark">+91 91766 10713</a>
-            </div>
-          </div>
-        </section>
 
         <section className={s.more}>
           <div className={`${s.wrap} ${s.moreGrid}`}>

@@ -4,21 +4,27 @@
 
 export type MilkType = "cow" | "buffalo" | "mixed";
 
-/** FSSAI minimum fat and SNF, %, and an indicative paneer yield, kg per 100 kg of milk */
-export const milk: Record<MilkType, { label: string; fat: number; snf: number; paneer: [number, number] }> = {
-  cow: { label: "Cow milk", fat: 3.2, snf: 8.3, paneer: [15, 18] },
-  buffalo: { label: "Buffalo milk", fat: 5.0, snf: 9.0, paneer: [17, 22] },
-  mixed: { label: "Mixed milk", fat: 4.5, snf: 8.5, paneer: [16, 20] },
+/** FSSAI minimum fat, %, and an indicative paneer yield, kg per 100 kg of milk */
+export const milk: Record<MilkType, { label: string; fat: number; paneer: [number, number] }> = {
+  cow: { label: "Cow milk", fat: 3.2, paneer: [15, 18] },
+  buffalo: { label: "Buffalo milk", fat: 5.0, paneer: [17, 22] },
+  mixed: { label: "Mixed milk", fat: 4.5, paneer: [16, 20] },
 };
 
 /** a litre of milk weighs about 1.03 kg */
 const KG_PER_L = 1.03;
 
-/** the FSSAI licence for a dairy handling `lpd` litres of milk a day */
-export function licence(lpd: number): "Registration" | "State licence" | "Central licence" {
-  if (lpd <= 500) return "Registration";
-  if (lpd <= 50000) return "State licence";
-  return "Central licence";
+/** FSSAI's tiers for dairy units: up to `lpd` litres of milk a day, the licence. Fees are left to FoSCoS, which keeps them current. */
+const tiers = [
+  { lpd: 500, name: "Registration" },
+  { lpd: 50000, name: "State licence" },
+  { lpd: Infinity, name: "Central licence" },
+];
+
+/** the FSSAI licence for a dairy handling `lpd` litres of milk a day, and the tier above it */
+export function licence(lpd: number) {
+  const i = tiers.findIndex((t) => lpd <= t.lpd);
+  return { ...tiers[i], next: tiers[i + 1] };
 }
 
 /** a pasteurizer that handles a day's milk in `hours`: LPH rounded up to 50, over as many lines of at most 30,000 LPH as it takes */
@@ -36,16 +42,12 @@ export function iceBank(lpd: number): "none" | "freon" | "either" | "ammonia" | 
   return "large";
 }
 
-/** what a day's milk holds and could become, in kg, before process losses */
-export function yields(lpd: number, fat: number, snf: number, type: MilkType) {
-  const kg = lpd * KG_PER_L, fatKg = (kg * fat) / 100, snfKg = (kg * snf) / 100;
+/** what a day's milk could become, in kg, before process losses: paneer, or ghee from its fat */
+export function yields(lpd: number, type: MilkType) {
+  const kg = lpd * KG_PER_L;
   return {
-    fatKg,
-    snfKg,
     // the creamery-butter method recovers about 92% of the fat, and ghee is at least 99.5% fat
-    ghee: (fatKg * 0.92) / 0.995,
-    // skimmed milk powder at its 5% moisture limit, from the milk's solids-not-fat
-    smp: snfKg / 0.95,
+    ghee: (kg * milk[type].fat * 0.92) / 100 / 0.995,
     paneer: milk[type].paneer.map((p) => (kg * p) / 100) as [number, number],
   };
 }
