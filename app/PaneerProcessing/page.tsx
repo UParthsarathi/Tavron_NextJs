@@ -17,24 +17,10 @@ export default function Page() {
         crumb="Paneer"
         title="Paneer plants"
         intro="From milk heating to cold store: a milk heating skid, coagulation tanks, pneumatic presses with hoops, cooling tanks and a cold store, in SS 304 / SS 316."
-        product="Milk and paneer"
-        input="Milk in"
-        output="Paneer out"
-        stations={[
-          { kind: "phe", part: 1, name: "Milk heating", steam: true, zone: "Heating" },
-          { kind: "vat", part: 2, name: "Coagulation\ntanks", count: 2, out: "Whey", zone: "Coagulation" },
-          { kind: "press", part: 3, name: "Paneer presses", count: 2, zone: "Pressing" },
-          { kind: "tank", part: 4, name: "Cooling tank", chill: true, zone: "Cooling" },
-          { kind: "coldstore", part: 5, name: "Cold store", zone: "Storage" },
-        ]}
-        parts={[
-          { name: "Milk heating system", href: "plateheat.html", spec: "4 to 90 °C on a skid, with hygienic plate heat exchanger and food-grade gaskets; automatic steam control valve, flow diversion valve and level controls; PLC or PID" },
-          { name: "Coagulation tanks", spec: "Laser-welded dimple jacket for the process temperatures; agitator with reputed-make gearbox; outlet for draining the coagulated mass" },
-          { name: "Paneer press and hoops", spec: "Pneumatic, single or multi-cylinder, adjustable stroke; SS 304 / SS 316 hoops with holes to drain whey" },
-          { name: "Cooling tanks", spec: "PUF insulated; a plate heat exchanger holds the temperature" },
-          { name: "Cold store", href: "RefrigerationEquipments.html", spec: "PUF insulated; cooling and condensing units of reputed brands; even temperature throughout; PLC control optional" },
-        ]}
-        sheetTitle="Paneer plant"
+        plant={<>
+          <p>Milk is heated from 4 to 90 °C on a skid, through a hygienic <a href="plateheat.html">plate heat exchanger</a> with an automatic steam control valve, flow diversion valve and level controls, on PLC or PID.</p>
+          <p>It coagulates in tanks with a laser-welded dimple jacket and an agitator, and the coagulated mass is drained into SS 304 or SS 316 hoops with holes to let the whey out. Pneumatic presses, single or multi-cylinder with an adjustable stroke, press the paneer, which is cooled in insulated tanks and kept in a <a href="RefrigerationEquipments.html">cold store</a>.</p>
+        </>}
         facts={[
           ["Milk heating", "4 to 90 °C"],
           ["Pressing", "Pneumatic"],
@@ -42,12 +28,12 @@ export default function Page() {
           ["Construction", "SS 304 / SS 316"],
         ]}
         built={[
-          { img: [`${dir}MILK-HEATING-SYSTEM.jpg`, 449, 317, "Skid-mounted milk heating system with plate heat exchanger and balance tank"], name: "Milk heating system", note: "Item 1" },
-          { img: [`${dir}PANEER-COAGULATION-TANK.jpg`, 329, 202, "Paneer coagulation tanks"], name: "Coagulation tanks", note: "Item 2" },
-          { img: [`${dir}PANEER-PRESS.jpg`, 500, 536, "Pneumatic paneer press"], name: "Paneer press", note: "Item 3" },
-          { img: [`${dir}Paneer-Hoops.jpg`, 500, 375, "Stainless-steel paneer hoops"], name: "Paneer hoops", note: "With item 3" },
-          { img: [`${dir}PANEER-COOLING-TANK.jpg`, 499, 338, "Paneer cooling tank"], name: "Cooling tank", note: "Item 4" },
-          { img: [`${dir}PANEER-COLD-STORE.jpg`, 304, 287, "Paneer cold store"], name: "Cold store", note: "Item 5" },
+          { img: [`${dir}MILK-HEATING-SYSTEM.jpg`, 449, 317, "Skid-mounted milk heating system with plate heat exchanger and balance tank"], name: "Milk heating system" },
+          { img: [`${dir}PANEER-COAGULATION-TANK.jpg`, 329, 202, "Paneer coagulation tanks"], name: "Coagulation tanks" },
+          { img: [`${dir}PANEER-PRESS.jpg`, 500, 536, "Pneumatic paneer press"], name: "Paneer press" },
+          { img: [`${dir}Paneer-Hoops.jpg`, 500, 375, "Stainless-steel paneer hoops"], name: "Paneer hoops", note: "With the press" },
+          { img: [`${dir}PANEER-COOLING-TANK.jpg`, 499, 338, "Paneer cooling tank"], name: "Cooling tank" },
+          { img: [`${dir}PANEER-COLD-STORE.jpg`, 304, 287, "Paneer cold store"], name: "Cold store" },
         ]}
         faq={[
           ["How is the milk heated?", "On a skid, from 4 to 90 °C, through a hygienic plate heat exchanger with food-grade gaskets. An automatic steam control valve, flow diversion valve and level controls run it, on PLC or PID."],
@@ -58,7 +44,7 @@ export default function Page() {
         ]}
         close={{
           title: "Planning a paneer plant?",
-          needs: ["How much milk a day, in litres", "Batch size, and how many batches a day", "The site: building, space and utilities"],
+          ask: "how much milk you handle a day, your batch size and batches a day, and your site",
           files: [
             ["Paneer plant brochure", "downloads/Paneer%20Plant.pdf", "881 KB"],
             ["Liquid milk plants", "milkprocessing.html"],

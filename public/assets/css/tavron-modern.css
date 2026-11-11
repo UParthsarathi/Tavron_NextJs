@@ -1245,7 +1245,7 @@
    the client reviews; drop the class from each <body> to remove them.
    -------------------------------------------------------------------------- */
 .tv-numbered { counter-reset: tv-img; }
-.tv-numbered :is(.tv-hero__slide, .tv-ind, .tv-prod__media, .tv-split__figure, .tv-doc__photo, .tv-size__frame, .tv-doc__ask-photo, .tv-viewer__thumbs button, .tv-item__frame, .tv-doc__fig, .tv-person__photo, .tv-strip__img, .tv-uses__img, .tv-doccert)::after {
+.tv-numbered :is(.tv-hero__slide, .tv-ind, .tv-prod__media, .tv-split__figure, .tv-doc__photo, .tv-size__frame, .tv-doc__ask-photo, .tv-viewer__thumbs button, .tv-item__frame, .tv-doc__fig, .tv-person__photo, .tv-strip__img, .tv-uses__img, .tv-doccert, .tv-num)::after {
   counter-increment: tv-img; content: counter(tv-img);
   position: absolute; top: 12px; left: 12px; z-index: 2;
   min-width: 34px; height: 34px; padding: 0 8px; border-radius: 999px;
@@ -1253,6 +1253,8 @@
   background: #00AEEF; color: #0A1A2A; border: 2px solid #fff;
   font: 700 15px/1 var(--f-display); box-shadow: 0 4px 12px rgba(0,0,0,.25);
 }
+/* .tv-num marks a picture in a component's own CSS module; :where() keeps a sticky photo sticky */
+.tv-numbered :where(.tv-num) { position: relative; }
 /* the closed tank's two views are numbered on their thumbnails, which need a smaller badge */
 .tv-numbered .tv-viewer__thumbs button { position: relative; }
 .tv-numbered .tv-viewer__thumbs button::after {
@@ -1676,8 +1678,3 @@
 .tv .tv-doc--contact .tv-doc__intro { color: rgba(255,255,255,.78); }
 @media (max-width: 991px) { .tv-doc--contact .tv-doc__top::before { bottom: calc(100% - 120px); } }
 
-/* plant pages: an equipment photo's badge is its item number on the drawing, or none */
-.tv-numbered .tv-plant-built .tv-strip__img::after { counter-increment: none; content: attr(data-item); }
-.tv-numbered .tv-plant-built .tv-strip__img:not([data-item])::after { display: none; }
-/* on a plant page numbers mean items on the drawing, so other pictures go unnumbered */
-.tv-numbered .tv-sp .tv-uses__img::after { display: none; }

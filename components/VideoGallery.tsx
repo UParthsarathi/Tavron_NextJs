@@ -37,7 +37,7 @@ export function VideoGallery({ videos }: { videos: GalleryVideo[] }) {
                 dialog.current?.showModal();
               }}
             >
-              <span className={v.portrait ? `${s.thumb} ${s.portrait}` : s.thumb}>
+              <span className={`${v.portrait ? `${s.thumb} ${s.portrait}` : s.thumb} tv-num`}>
                 <span className={s.media}>
                   {v.portrait ? (
                     <>

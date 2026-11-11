@@ -1,34 +1,8 @@
-import { common, photos, Plant, type Img, type Part } from "@/components/Plant";
+import { Plant } from "@/components/Plant";
 import { Site } from "@/components/Site";
-import { MilkDrawing } from "./Drawing";
 
 // Every figure here is from Tavron's own brochures and site: the milk plant, refrigeration and tank
 // brochures, the dairy page, the About page and the clients page. Nothing is estimated.
-
-// numbered as on the drawing
-const parts: Part[] = [
-  { name: "Can reception", spec: "Can conveyor, can tipper and dump tank" },
-  { name: "Road milk tanker", href: "tanks.html", spec: "Insulated stainless-steel tankers, 5,000 to 20,000 L" },
-  common.pumps,
-  { name: "Milk chiller", href: "plateheat.html", spec: "Plate heat exchanger; cools the milk as it arrives, with ice water" },
-  { name: "Raw milk silos", href: "tanks.html", spec: "PUF-insulated SS 304 / SS 316 tanks and silos, 2,000 to 1,00,000 L, rotary spray ball for CIP" },
-  { name: "HTST pasteurizer", href: "pasteurisers.html", spec: "Plate heat exchanger with regeneration, holding tube and balance tank; at least 74 °C for 20 seconds" },
-  { name: "Cream separator", spec: "Centrifugal; takes off cream to set the milk's fat" },
-  { name: "Homogeniser", spec: "Breaks up the fat so the cream doesn't rise in the pack" },
-  { name: "Pasteurised milk tanks", href: "tanks.html", spec: "As item 5, with agitator, temperature transmitter and hygienic outlet valves" },
-  { name: "Pouch packing machines", spec: "Form-fill-seal, integrated with the line" },
-  { name: "Ice bank", href: "RefrigerationEquipments.html", spec: "Freon, for 1,000 to 20,000 LPD; ammonia, for 10,000 to 5,00,000 LPD" },
-  common.cip,
-];
-
-/** lines that grow from the same milk: [page, name, what it is, photo] */
-const lines: [string, string, string, Img][] = [
-  ["CurdYogurtProcessing.html", "Curd and yogurt", "From the same pasteurised milk: insulated process tanks, plate heat exchangers and CIP.", photos.tank],
-  ["FlavouredMilkProcessing.html", "Flavoured milk", "From 500 litres a day, batch or HTST, with retort sterilisation for glass or PET bottles or aseptic packing for long shelf life.", ["assets/img/projects/FlavouredMilkPro/flamilkpro5b.jpg", 700, 525, "HTST pasteurizer skid in a flavoured milk plant"]],
-  ["PaneerProcessing.html", "Paneer", "Milk heating, coagulation tanks, pneumatic presses with hoops, cooling tanks and a cold store.", ["assets/img/projects/paneer-processing/PANEER-PRESS.jpg", 500, 536, "Pneumatic paneer press"]],
-  ["ButterProcessing.html", "Butter and ghee", "The cream from the separator, churned to butter and boiled to ghee: churns, melting vats, ghee boilers, settling tanks and clarifiers, 50 L to 10,000 L.", ["assets/img/projects/butter-processing/ButterChurn.jpg", 404, 311, "Stainless-steel butter churn"]],
-  ["milkpowder.html", "Milk powder", "Surplus milk to powder: multiple effect evaporators and spray dryers up to 1,500 kg/hr water evaporation.", photos.spray],
-];
 
 export default function Page() {
   return (
@@ -45,9 +19,11 @@ export default function Page() {
         crumb="Liquid milk"
         title="Liquid milk processing plants"
         intro="For dairies handling 1,000 to 5,00,000 litres of milk a day: reception, chilling, storage, separation, homogenisation, HTST pasteurisation and packing, with ice water and CIP, designed, built and commissioned as one plant."
-        drawing={<MilkDrawing parts={parts} />}
-        parts={parts}
-        sheetTitle="Liquid milk processing plant"
+        plant={<>
+          <p>Milk arrives by can, over a can conveyor and tipper into a dump tank, or by insulated <a href="tanks.html">road tanker</a> of 5,000 to 20,000 L. A <a href="plateheat.html">plate chiller</a> cools it with ice water as it comes in, and it waits in insulated <a href="tanks.html">silos</a> of 2,000 to 1,00,000 L.</p>
+          <p>From there an <a href="pasteurisers.html">HTST pasteurizer</a>, with regeneration, takes it to at least 74 °C for 20 seconds. A cream separator sets the fat, and a homogeniser breaks it up so the cream doesn&apos;t rise in the pack. The pasteurised milk is held in insulated tanks and packed on form-fill-seal pouch machines.</p>
+          <p>An <a href="RefrigerationEquipments.html">ice bank</a> supplies the ice water, <a href="pumps.html">SS centrifugal pumps</a> move the milk, and a <a href="cipsystem.html">CIP unit</a> cleans the line.</p>
+        </>}
         facts={[
           ["Milk a day", "1,000 to 5,00,000 L"],
           ["Pasteurisation", "HTST, 50 to 30,000 LPH"],
@@ -58,53 +34,28 @@ export default function Page() {
           {
             title: "Sized to your milk",
             aside: "What changes as the litres a day go up. Tell us yours and each part is sized to it.",
-            rows: [
-              ["Ice water", <>
-                <p>Up to 20,000 litres a day: a Freon ice bank (R22, R404A or another Freon), with scroll or reciprocating compressors.</p>
-                <p>From 10,000 to 5,00,000 litres a day, and larger on request: an ammonia ice bank, with a return water chiller, falling film chiller or glycol system as options.</p>
-                <p>Either way, the ice bank stores enough ice to cool the plant&apos;s full daily milk. <a href="RefrigerationEquipments.html">Refrigeration systems</a></p>
-              </>],
-              ["Pasteurisation", <p>One HTST pasteurizer, from 50 to 30,000 litres an hour, skid-mounted or floor-mounted. <a href="pasteurisers.html">Pasteurizers</a></p>],
-              ["Storage", <p>Insulated tanks of 2,000, 3,000, 5,000 or 10,000 L, and milk silos up to 1,00,000 L. <a href="tanks.html">Tanks and silos</a></p>],
-              ["Control", <>
-                <p>Manual, or automatic on PLC with a SCADA screen of the whole line.</p>
-                <p>
-                  <img src="assets/img/projects/milkprocessing.jpg" width="798" height="478" loading="lazy" style={{ display: "block", width: "100%", maxWidth: 360, height: "auto", marginTop: 8, border: "1px solid var(--rule)" }} alt="SCADA screen of a milk processing system showing the pasteurizer, tanks and pumps" data-lightbox="assets/img/projects/milkprocessing.jpg" />
-                </p>
-              </>],
-              ["Cleaning", <p>CIP from a single circuit to several, automatic or semi-automatic. Tanks are cleaned by a rotary spray ball; the pasteurizer, pumps and lines are cleaned without taking them apart. <a href="cipsystem.html">CIP systems</a></p>],
-            ],
+            text: <>
+              <p>Up to 20,000 litres a day, ice water comes from a Freon ice bank (R22, R404A or another Freon) with scroll or reciprocating compressors. From 10,000 to 5,00,000 litres a day, and larger on request, it comes from an ammonia ice bank, with a return water chiller, falling film chiller or glycol system as options. Either way, the ice bank stores enough ice to cool the plant&apos;s full daily milk. <a href="RefrigerationEquipments.html">Refrigeration systems</a></p>
+              <p>One <a href="pasteurisers.html">HTST pasteurizer</a> covers 50 to 30,000 litres an hour, skid-mounted or floor-mounted. Storage runs from insulated tanks of 2,000, 3,000, 5,000 or 10,000 L to <a href="tanks.html">milk silos</a> of 1,00,000 L.</p>
+              <p>The plant runs manually, or automatically on PLC with a SCADA screen of the whole line. <a href="cipsystem.html">CIP</a> runs from a single circuit to several, automatic or semi-automatic: a rotary spray ball cleans the tanks, and the pasteurizer, pumps and lines are cleaned without taking them apart.</p>
+            </>,
           },
           {
             title: "What the plant can make",
-            aside: "Pouch milk to start, and more lines from the same milk as the business grows.",
-            body: (
-              <>
-                <div className="tv-sp__prose">
-                  <p>Toned, double-toned, standardised and full-cream milk, with the fat set by the cream separator (item 7). We build the lines that grow from it too:</p>
-                </div>
-                <ul className="tv-uses">
-                  {lines.map(([href, name, text, img]) => (
-                    <li key={href}>
-                      <figure className="tv-uses__img"><img src={img[0]} width={img[1]} height={img[2]} loading="lazy" alt={img[3]} /></figure>
-                      <div>
-                        <h3><a href={href}>{name}</a></h3>
-                        <p>{text}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            ),
+            aside: "Toned, double-toned, standardised and full-cream milk to start, with the fat set by the cream separator. We build the lines that grow from the same milk too.",
+            text: <>
+                <p><a href="CurdYogurtProcessing.html">Curd and yogurt</a> come from the same pasteurised milk, in insulated process tanks with plate heat exchangers and CIP. <a href="FlavouredMilkProcessing.html">Flavoured milk</a> starts from 500 litres a day, batch or HTST, with retort sterilisation for glass or PET bottles, or aseptic packing for long shelf life.</p>
+                <p><a href="PaneerProcessing.html">Paneer</a> needs milk heating, coagulation tanks, pneumatic presses with hoops, cooling tanks and a cold store. The cream from the separator can be churned to <a href="ButterProcessing.html">butter and boiled to ghee</a>, in churns, melting vats, ghee boilers, settling tanks and clarifiers of 50 L to 10,000 L. Surplus milk can go to <a href="milkpowder.html">milk powder</a>, through multiple effect evaporators and spray dryers of up to 1,500 kg/hr water evaporation.</p>
+              </>,
           },
         ]}
         built={[
-          { img: ["assets/img/projects/MilkProcessing/milkpro7b.jpg", 700, 525, "Skid-mounted HTST milk pasteurizer with plate heat exchanger"], name: "HTST pasteurizer", note: "Skid-mounted, item 6" },
-          { img: ["assets/img/projects/MilkProcessing/milkpro6b.jpg", 500, 707, "Insulated vertical milk tank with top agitator"], name: "Insulated milk tank", note: "Items 5 and 9" },
-          { img: ["assets/img/projects/MilkProcessing/milkpro1b.jpg", 700, 791, "Plate heat exchanger on a stainless-steel frame"], name: "Plate heat exchanger", item: 6, note: <>{"The heart of item 6. "}<a href="plateheat.html">Plate heat exchangers</a></> },
-          { img: ["assets/img/pumps/pumps1b.jpg", 500, 400, "Stainless-steel centrifugal pumps"], name: "SS centrifugal pumps", note: "Item 3" },
-          { img: ["assets/img/projects/MilkProcessing/milkpro2b.jpg", 700, 394, "Skid-mounted CIP system with tanks and control panel"], name: "CIP unit", note: "Item 12" },
-          { img: ["assets/img/projects/LiquidEggProcessing/IBT.jpg", 500, 361, "Freon ice bank tank with condensing units"], name: "Freon ice bank", note: "Item 11" },
+          { img: ["assets/img/projects/MilkProcessing/milkpro7b.jpg", 700, 525, "Skid-mounted HTST milk pasteurizer with plate heat exchanger"], name: "HTST pasteurizer", note: "Skid-mounted" },
+          { img: ["assets/img/projects/MilkProcessing/milkpro6b.jpg", 500, 707, "Insulated vertical milk tank with top agitator"], name: "Insulated milk tank", note: "For raw and pasteurised milk" },
+          { img: ["assets/img/projects/MilkProcessing/milkpro1b.jpg", 700, 791, "Plate heat exchanger on a stainless-steel frame"], name: "Plate heat exchanger", note: <>{"The heart of the HTST pasteurizer. "}<a href="plateheat.html">Plate heat exchangers</a></> },
+          { img: ["assets/img/pumps/pumps1b.jpg", 500, 400, "Stainless-steel centrifugal pumps"], name: "SS centrifugal pumps" },
+          { img: ["assets/img/projects/MilkProcessing/milkpro2b.jpg", 700, 394, "Skid-mounted CIP system with tanks and control panel"], name: "CIP unit" },
+          { img: ["assets/img/projects/LiquidEggProcessing/IBT.jpg", 500, 361, "Freon ice bank tank with condensing units"], name: "Freon ice bank" },
         ]}
         faq={[
           ["What size of milk plant can you build?", "From 1,000 to 5,00,000 litres of milk a day, and larger on request. The HTST pasteurizer runs from 50 to 30,000 litres an hour, and storage goes from 2,000 L tanks to 1,00,000 L silos."],
@@ -118,7 +69,7 @@ export default function Page() {
         ]}
         close={{
           title: "Planning a liquid milk plant?",
-          needs: ["How much milk a day, in litres", "Your product mix: milk, curd, flavoured milk, anything else", "The site: building, space and utilities"],
+          ask: "how much milk you handle a day, your product mix and your site",
           files: [
             ["Milk plant brochure", "downloads/Milk%20Plant.pdf", "1.8 MB"],
             ["Milk powder plants", "milkpowder.html"],

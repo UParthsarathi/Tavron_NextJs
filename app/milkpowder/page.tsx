@@ -1,4 +1,4 @@
-import { common, Plant } from "@/components/Plant";
+import { photos, Plant } from "@/components/Plant";
 import { Site } from "@/components/Site";
 
 const dir = "assets/img/projects/milk-powder-processing/";
@@ -17,63 +17,36 @@ export default function Page() {
         crumb="Milk powder"
         title="Milk powder plants"
         intro="From milk to powder: storage, multiple effect evaporation, spray drying from 5 to 1,500 kg/hr water evaporation, powder separation and fluid bed finishing, with instrument control throughout, built and commissioned as one plant."
-        product="Milk"
-        input="Milk in"
-        output="Powder to packing"
-        stations={[
-          { kind: "tank", part: 1, name: "Milk storage", count: 2, zone: "Storage" },
-          { kind: "pump", part: 2, name: "Pump" },
-          { kind: "evaporator", part: 3, name: "Multiple effect\nevaporator", steam: true, zone: "Evaporation" },
-          { kind: "pump", part: 2, name: "Pump", zone: "Drying" },
-          { kind: "dryer", part: 4, name: "Spray dryer" },
-          { kind: "fluidbed", part: 5, name: "Vibro fluid bed" },
-        ]}
-        parts={[
-          { name: "Milk storage", href: "tanks.html", spec: "PUF-insulated SS 304 / SS 316 tanks, rotary spray ball for CIP" },
-          common.pumps,
-          { name: "Multiple effect evaporator", href: "evaporators.html", spec: "Falling film, rising film or forced circulation, or combined; TVR, MVR optional; calandria tubes to A 319 or ASTM A 249" },
-          { name: "Spray dryer", href: "spray.html", spec: "5 to 1,500 kg/hr water evaporation; rotary atomiser, nozzle or two-fluid; single or multiple cyclones, wet scrubber and bag filters" },
-          { name: "Vibro fluid bed", href: "spray.html", spec: "SS 304 / SS 316, spring-mounted SS or MS legs, easy to open for product inspection" },
-          common.cip,
-        ]}
-        cip={6}
-        sheetTitle="Milk powder plant"
+        photo={photos.spray}
+        plant={<>
+          <p>Milk is held in insulated <a href="tanks.html">storage tanks</a> and concentrated in a <a href="evaporators.html">multiple effect evaporator</a>: falling film, rising film or forced circulation, or a combination, with TVR or MVR as options.</p>
+          <p>The concentrate is dried in a <a href="spray.html">spray dryer</a> of 5 to 1,500 kg/hr water evaporation, with a rotary atomiser, nozzle or two-fluid atomisation. Cyclones, a wet scrubber and bag filters take out the powder, and a vibro fluid bed finishes it. A <a href="cipsystem.html">CIP unit</a> cleans the plant.</p>
+        </>}
         facts={[
           ["Evaporation", "Multiple effect, TVR or MVR"],
           ["Drying", "5 to 1,500 kg/hr"],
           ["Powder separation", "Cyclones, scrubber, bag filters"],
           ["Construction", "SS 304 / SS 316"],
+          ["Control", "SCADA, with field-mounted control valves holding temperature and pressure"],
         ]}
         sections={[
           {
-            title: "The plant on screen",
-            aside: "Evaporator and spray dryer sections run from SCADA, with field-mounted control valves holding temperature and pressure.",
-            images: [
-              { img: ["assets/img/projects/evaporatorplant.jpg", 798, 478, "SCADA screen of an evaporator plant"], caption: "Evaporator plant SCADA." },
-              { img: ["assets/img/projects/spraydryerplant.jpg", 798, 478, "SCADA screen of a spray dryer plant"], caption: "Spray dryer plant SCADA." },
-            ],
-          },
-          {
             title: "Evaporation, built for food",
             aside: "The evaporator does most of the water removal, so it's designed for the product and for steam economy.",
-            rows: [
-              ["Calandria", "Tubes to A 319 or ASTM A 249; shell in SS 304, SS 316 or carbon steel. Single-pass or multi-pass, multi-pass for the food industry to avoid contamination, designed for uniform wetting."],
-              ["Pre-heaters and separator", "Straight-tube pre-heaters heated by calandria vapour; a vapour separator designed to avoid carry-over."],
-              ["Thermal vapour recompressor", "Single or multiple nozzles, in SS 304, SS 316 or carbon steel, for optimum steam consumption."],
-              ["Lab model spray dryer", <>
-                <p>2 to 25 kg/hr water evaporation, for R&amp;D and education, with a PLC option.</p>
-                <p><a href="spray.html">Spray dryers</a></p>
-              </>],
-            ],
+            text: <>
+              <p>The calandria tubes are to A 319 or ASTM A 249, and the shell is SS 304, SS 316 or carbon steel. Calandrias are single-pass or multi-pass, multi-pass for the food industry to avoid contamination, and designed for uniform wetting.</p>
+              <p>Straight-tube pre-heaters are heated by calandria vapour, the vapour separator is designed to avoid carry-over, and a thermal vapour recompressor with single or multiple nozzles keeps steam consumption down.</p>
+              <p>For R&amp;D and education, we also build a lab model spray dryer of 2 to 25 kg/hr water evaporation, with a PLC option. <a href="spray.html">Spray dryers</a></p>
+            </>,
           },
         ]}
         built={[
-          { img: [`${dir}triple-effect-evaporator.jpg`, 207, 282, "Triple effect evaporator with its columns and piping"], name: "Triple effect evaporator", note: "Item 3" },
-          { img: [`${dir}multi-pass-calindria.jpg`, 253, 152, "Multi-pass calandria tube sheet"], name: "Calandria", note: "Inside item 3" },
-          { img: [`${dir}thermal-vapour-re-compressor.jpg`, 250, 166, "Thermal vapour recompressor"], name: "Thermal vapour recompressor", note: "Part of item 3" },
-          { img: [`${dir}spray-dryer.jpg`, 214, 282, "Spray dryer drying chamber"], name: "Spray dryer", note: "Item 4" },
-          { img: [`${dir}efficient-cyclone-system.jpg`, 251, 184, "Stainless-steel cyclone and ducting"], name: "Cyclone system", note: "Part of item 4" },
-          { img: [`${dir}vibro-fluid-bed.jpg`, 258, 184, "Vibro fluid bed below a spray dryer"], name: "Vibro fluid bed", note: "Item 5" },
+          { img: [`${dir}triple-effect-evaporator.jpg`, 207, 282, "Triple effect evaporator with its columns and piping"], name: "Triple effect evaporator" },
+          { img: [`${dir}multi-pass-calindria.jpg`, 253, 152, "Multi-pass calandria tube sheet"], name: "Calandria", note: "Inside the evaporator" },
+          { img: [`${dir}thermal-vapour-re-compressor.jpg`, 250, 166, "Thermal vapour recompressor"], name: "Thermal vapour recompressor", note: "Part of the evaporator" },
+          { img: [`${dir}spray-dryer.jpg`, 214, 282, "Spray dryer drying chamber"], name: "Spray dryer" },
+          { img: [`${dir}efficient-cyclone-system.jpg`, 251, 184, "Stainless-steel cyclone and ducting"], name: "Cyclone system", note: "Part of the spray dryer" },
+          { img: [`${dir}vibro-fluid-bed.jpg`, 258, 184, "Vibro fluid bed below a spray dryer"], name: "Vibro fluid bed" },
           { img: [`${dir}structural-mounted-evaporator.jpg`, 253, 170, "Structure-mounted evaporator"], name: "Structure-mounted evaporator", note: "For industrial duty" },
           { img: [`${dir}Lab-Model-Spray-Dryer.jpg`, 400, 451, "Lab model spray dryer"], name: "Lab model spray dryer", note: "For R&D" },
         ]}
@@ -88,7 +61,7 @@ export default function Page() {
         ]}
         close={{
           title: "Planning a milk powder plant?",
-          needs: ["How much milk a day, in litres", "The powder you want to make", "The site: building, space and utilities"],
+          ask: "how much milk you handle a day, the powder you want to make, and your site",
           files: [
             ["Milk powder plant brochure", "downloads/Milk%20Powder%20Plant.pdf", "787 KB"],
             ["Evaporator & spray dryer", "downloads/EvaporatorSprayDryer.pdf", "11.1 MB"],

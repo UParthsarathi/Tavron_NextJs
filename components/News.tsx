@@ -18,7 +18,7 @@ export function NewsRow({ item, lead = false }: { item: NewsItem; lead?: boolean
   return (
     <article className={lead ? `${s.row} ${s.lead}` : s.row} data-type={item.type.toLowerCase()}>
       {item.image && (
-        <figure className={s.rowPhoto}>
+        <figure className={`${s.rowPhoto} tv-num`}>
           <img src={item.image.src} width={item.image.width} height={item.image.height} loading={lead ? undefined : "lazy"} alt={item.image.alt} />
         </figure>
       )}
