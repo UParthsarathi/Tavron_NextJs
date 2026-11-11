@@ -1,0 +1,35 @@
+rules_version = '2';
+
+// Who may read and write the website's content. This file is the lock on the admin: the pages at
+// /admin only hide buttons, the checks that count happen here, on Google's servers.
+// After changing it: npm test, then `firebase deploy --only firestore:rules`.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null && request.auth.token.email_verified;
+    }
+    // The owner is fixed here. Everyone else is a document staff/<their email>, which only the
+    // owner can add or remove (the Staff tab of the admin).
+    function owner() {
+      return signedIn() && request.auth.token.email == 'sales@tavron.net';
+    }
+    function staff() {
+      return owner() || (signedIn() && exists(/databases/$(database)/documents/staff/$(request.auth.token.email)));
+    }
+
+    // news/<slug>: visitors see published items only, staff see drafts too.
+    match /news/{slug} {
+      allow read: if resource.data.published == true || staff();
+      allow create, update: if staff() && request.resource.data.published is bool;
+      allow delete: if staff();
+    }
+    match /videos/{id} {
+      allow read: if true;
+      allow write: if staff();
+    }
+    match /staff/{email} {
+      allow read: if staff();
+      allow write: if owner();
+    }
+  }
+}

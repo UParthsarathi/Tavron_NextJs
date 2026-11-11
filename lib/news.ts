@@ -1,8 +1,9 @@
 import data from "@/content/news.json";
+import { read } from "./firestore";
 
-// News lives in content/news.json. When an admin panel or CMS takes over, it can either write that
-// file, or replace the bodies of getNews / getNewsItem with a fetch that returns the same shape.
-// The pages only ever use these two functions.
+// News is written at /admin and kept in Firestore (lib/firestore.ts). The pages only ever use
+// getNews / getNewsItem. content/news.json is the news as it was before the admin existed: it is
+// shown only when Firestore can't be reached, so an outage at Google never empties the news pages.
 
 export type NewsItem = {
   /** the page's address: /news/<slug> */
@@ -22,14 +23,17 @@ export type NewsItem = {
   links?: { label: string; href: string; size?: string }[];
 };
 
-const news: NewsItem[] = data;
-
+/** the published items, newest first; drafts never leave the admin */
 export async function getNews(): Promise<NewsItem[]> {
+  const news = await read<NewsItem>("news", "published").catch((e): NewsItem[] => {
+    console.error("News is being shown from content/news.json:", e);
+    return data;
+  });
   return [...news].sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export async function getNewsItem(slug: string): Promise<NewsItem | undefined> {
-  return news.find((n) => n.slug === slug);
+  return (await getNews()).find((n) => n.slug === slug);
 }
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];

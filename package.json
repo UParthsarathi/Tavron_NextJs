@@ -5,9 +5,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node --experimental-strip-types --no-warnings lib/youtube.test.mjs && node --experimental-strip-types --no-warnings lib/dairy.test.mjs"
+    "test": "node --experimental-strip-types --no-warnings lib/youtube.test.mjs && node --experimental-strip-types --no-warnings lib/dairy.test.mjs && node --experimental-strip-types --no-warnings lib/firestore.test.mjs",
+    "test:rules": "node scripts/rules.test.mjs",
+    "rules": "npm run test:rules && firebase deploy --only firestore:rules,storage --project tavron-site-admin"
   },
   "dependencies": {
+    "firebase": "^13.3.0",
     "next": "^16.4.5",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"

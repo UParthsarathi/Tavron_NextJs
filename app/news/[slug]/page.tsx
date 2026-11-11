@@ -4,9 +4,8 @@ import { Site } from "@/components/Site";
 import { formatDate, getNews, getNewsItem } from "@/lib/news";
 import { SITE } from "@/lib/site";
 
-// Every item is built at build time; an address that isn't in the news is a 404.
-export const dynamicParams = false;
-
+// The items published so far are built with the site. One published later at /admin is built the
+// first time someone opens it; an address that isn't in the news is a 404.
 export async function generateStaticParams() {
   return (await getNews()).map((n) => ({ slug: n.slug }));
 }

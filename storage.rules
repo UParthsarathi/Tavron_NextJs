@@ -1,0 +1,20 @@
+rules_version = '2';
+
+// News photos. Anyone can fetch a photo by its name (nobody can list them); staff can add new
+// ones, which the admin has already shrunk in the browser. A photo is never overwritten.
+// The staff check is the same as in firestore.rules.
+service firebase.storage {
+  match /b/{bucket}/o {
+    function staff() {
+      return request.auth != null && request.auth.token.email_verified
+        && (request.auth.token.email == 'sales@tavron.net'
+          || firestore.exists(/databases/(default)/documents/staff/$(request.auth.token.email)));
+    }
+    match /{file} {
+      allow get: if true;
+      allow create: if staff()
+        && request.resource.size < 3 * 1024 * 1024
+        && request.resource.contentType.matches('image/(jpeg|png|webp)');
+    }
+  }
+}

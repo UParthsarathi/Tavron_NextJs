@@ -1,0 +1,9 @@
+{
+  "firestore": { "rules": "firestore.rules", "location": "asia-south1" },
+  "storage": { "rules": "storage.rules" },
+  "auth": {
+    "providers": {
+      "googleSignIn": { "oAuthBrandDisplayName": "Tavron website admin", "supportEmail": "sales@tavron.net" }
+    }
+  }
+}

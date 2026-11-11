@@ -1,0 +1,28 @@
+/* The admin (/admin). Plain on purpose: the form and table styles of Bootstrap, which the site
+   already loads, the site's own buttons (.tv-btn), and the little that is here. */
+.page { max-width: 860px; margin: 0 auto; padding: 32px 16px 96px; }
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; padding-bottom: 12px; margin-bottom: 24px; border-bottom: 1px solid var(--line, #d9dee5); }
+.top h1 { margin: 0; font-size: 22px; }
+.top p { margin: 0; }
+.h2 { margin: 0 0 20px; font-size: 20px; }
+
+.tabs { display: flex; gap: 4px; margin-bottom: 24px; }
+.tabs button { padding: 8px 16px; border: 0; border-radius: 6px; background: none; font-weight: 600; color: inherit; }
+.tabs button[aria-current] { background: #0a1a2a; color: #fff; }
+
+.field { display: block; margin-bottom: 18px; }
+.field > span { display: block; margin-bottom: 4px; font-weight: 600; }
+.field > small { display: block; margin-top: 4px; color: var(--muted, #5b6672); }
+.row { display: flex; flex-wrap: wrap; gap: 0 16px; }
+.row > * { flex: 1 1 240px; }
+
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 24px; }
+.link { padding: 0; border: 0; background: none; color: #0b5cab; text-decoration: underline; cursor: pointer; }
+.link:disabled { opacity: 0.5; }
+.danger { color: #b3261e; }
+.note { padding: 10px 14px; border-radius: 6px; background: #e8f5ee; }
+.error { color: #b3261e; font-weight: 600; }
+
+.thumb { display: block; width: 200px; height: auto; margin-bottom: 8px; border-radius: 4px; }
+.still { display: block; width: 96px; height: auto; border-radius: 4px; }
+.nowrap { white-space: nowrap; }
